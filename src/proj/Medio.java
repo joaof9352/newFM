@@ -8,6 +8,20 @@ public class Medio extends Jogador {
         recuperacao = rec;
     }
 
+    public Medio(Medio m){
+        super(m);
+        this.recuperacao = m.getRecuperacao();
+    }
+
+    public int getRecuperacao(){
+        return this.recuperacao;
+    }
+
+    @Override
+    public double calculaHabilidade() {
+        return 0;
+    }
+
     public static Medio parse(String input){
         String[] campos = input.split(",");
         return new Medio(campos[0], Integer.parseInt(campos[1]),
@@ -21,4 +35,8 @@ public class Medio extends Jogador {
                 Integer.parseInt(campos[9]));
     }
 
+    @Override
+    public Jogador clone() {
+        return new Medio(this);
+    }
 }

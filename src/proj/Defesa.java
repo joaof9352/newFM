@@ -5,6 +5,15 @@ public class Defesa extends Jogador {
         super(nomeJ, numeroJ, vel, res, des, imp, cab, rem, p);
     }
 
+    public Defesa(Defesa d){
+        super(d);
+    }
+
+    @Override
+    public double calculaHabilidade() {
+        return 0;
+    }
+
     public static Defesa parse(String input){
         String[] campos = input.split(",");
         return new Defesa(campos[0], Integer.parseInt(campos[1]),
@@ -17,4 +26,8 @@ public class Defesa extends Jogador {
                 Integer.parseInt(campos[8]));
     }
 
+    @Override
+    public Defesa clone() {
+        return new Defesa(this);
+    }
 }

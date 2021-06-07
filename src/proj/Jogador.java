@@ -1,6 +1,6 @@
 package proj;
 
-public class Jogador {
+public abstract class Jogador {
 
     private String nomeJogador;
     private int numeroJogador;
@@ -18,6 +18,8 @@ public class Jogador {
         remate = rem;
         passe = p;
     }
+
+    public abstract double calculaHabilidade();
 
     public Jogador(Jogador j) {
         nomeJogador = j.getNomeJogador();
@@ -102,12 +104,6 @@ public class Jogador {
     public void setPasse(int passe) {
         this.passe = passe;
     }
-
-    @Override
-    protected Jogador clone(){
-        return new Jogador(this);
-    }
-
     /*public static Jogador parse(String input){
         String[] campos = input.split(",");
         return new Jogador(campos[0], Integer.parseInt(campos[1]), campos[2],
@@ -118,6 +114,8 @@ public class Jogador {
                                         Integer.parseInt(campos[7]),
                                         Integer.parseInt(campos[8]));
     }*/
+
+    public abstract Jogador clone();
 
     public String toString(){
         return nomeJogador +"\n";

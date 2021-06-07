@@ -8,6 +8,20 @@ public class GuardaRedes extends Jogador{
         elasticidade = elast;
     }
 
+    public GuardaRedes(GuardaRedes gr){
+        super(gr);
+        this.elasticidade = gr.getElasticidade();
+    }
+
+    public int getElasticidade(){
+        return this.elasticidade;
+    }
+
+    @Override
+    public double calculaHabilidade() {
+        return 0;
+    }
+
     public static GuardaRedes parse(String input){
         String[] campos = input.split(",");
         return new GuardaRedes(campos[0], Integer.parseInt(campos[1]),
@@ -21,4 +35,7 @@ public class GuardaRedes extends Jogador{
                 Integer.parseInt(campos[9]));
     }
 
+    public GuardaRedes clone(){
+        return new GuardaRedes(this);
+    }
 }

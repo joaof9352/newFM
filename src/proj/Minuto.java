@@ -1,28 +1,35 @@
 package proj;
 
+import java.util.List;
 import java.util.Random;
 
 public class Minuto {
-
-    private double poderGRcasa, poderDEFcasa, poderLATcasa, poderMCcasa, poderATTCasa;
-    private double poderGRfora, poderDEFfora, poderLATfora, poderMCfora, poderATTfora;
+    private List<Double> poderCasa, poderFora;
     private final double fatorCriacao = 0.0028;
     private final double fatorFinalizacao = 0.0059;
     private final double fatorCasa = 0.0005; // 0.0018
 
+    private int oportunidadeParaQuem, golo;
+
+    public int getOportunidadeParaQuem(){
+        return this.oportunidadeParaQuem;
+    }
+
+    public int getGolo(){
+        return this.golo;
+    }
+
     private double probCasaCriar, probForaCriar, probCasaMarcar, probForaMarcar;
 
-    public Minuto(double poderGRcasa, double poderDEFcasa, double poderLATcasa, double poderMCcasa, double poderATTCasa, double poderGRfora, double poderDEFfora, double poderLATfora, double poderMCfora, double poderATTfora) {
-        this.poderGRcasa = poderGRcasa;
-        this.poderDEFcasa = poderDEFcasa;
-        this.poderLATcasa = poderLATcasa;
-        this.poderMCcasa = poderMCcasa;
-        this.poderATTCasa = poderATTCasa;
-        this.poderGRfora = poderGRfora;
-        this.poderDEFfora = poderDEFfora;
-        this.poderLATfora = poderLATfora;
-        this.poderMCfora = poderMCfora;
-        this.poderATTfora = poderATTfora;
+    public Minuto(List<Double> poderCasa, List<Double> poderFora) {
+        this.poderCasa = poderCasa;
+        this.poderFora = poderFora;
+        calculaProbs();
+        this.oportunidadeParaQuem = oportunidade();
+        if(this.oportunidadeParaQuem == 1)
+            this.golo = vaiMarcar(probCasaMarcar);
+        else if(this.oportunidadeParaQuem == 2)
+            this.golo = vaiMarcar(probForaMarcar);
     }
     //0 se não houver oportunidade, 1 se houver da casa, 2 se houver fora
     public int oportunidade(){
@@ -55,9 +62,9 @@ public class Minuto {
     }
 
     private void calculaProbs(){
-        this.probCasaCriar = (poderMCcasa + poderLATcasa - poderMCfora - poderLATfora + 20) * (fatorCriacao + fatorCasa);
-        this.probForaCriar = (poderMCfora + poderLATfora - poderMCcasa - poderLATcasa + 20) * (fatorCriacao);
-        this.probCasaMarcar = (poderATTCasa - poderDEFfora - poderGRfora - poderLATfora + 60) * (fatorFinalizacao + fatorCasa);
-        this.probForaMarcar = (poderATTfora - poderDEFcasa - poderGRcasa - poderLATcasa + 60) * (fatorFinalizacao);
+        this.probCasaCriar = (poderCasa.get(3) + poderCasa.get(1) - poderFora.get(3) - poderFora.get(1) + 20) * (fatorCriacao + fatorCasa);
+        this.probForaCriar = (poderFora.get(3) + poderFora.get(1) - poderCasa.get(3) - poderCasa.get(1) + 20) * (fatorCriacao);
+        this.probCasaMarcar = (poderCasa.get(4) - poderFora.get(2) - poderFora.get(0) - poderFora.get(1) + 60) * (fatorFinalizacao + fatorCasa);
+        this.probForaMarcar = (poderFora.get(4) - poderCasa.get(2) - poderCasa.get(0) - poderCasa.get(1) + 60) * (fatorFinalizacao);
   }
 }

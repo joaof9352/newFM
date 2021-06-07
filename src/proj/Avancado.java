@@ -5,6 +5,15 @@ public class Avancado extends Jogador {
         super(nomeJ, numeroJ, vel, res, des, imp, cab, rem, p);
     }
 
+    public Avancado(Avancado a){
+        super(a);
+    }
+
+    @Override
+    public double calculaHabilidade() {
+        return 0;
+    }
+
     public static Avancado parse(String input){
         String[] campos = input.split(",");
         return new Avancado(campos[0], Integer.parseInt(campos[1]),
@@ -17,4 +26,8 @@ public class Avancado extends Jogador {
                 Integer.parseInt(campos[8]));
     }
 
+    @Override
+    public Avancado clone() {
+        return new Avancado(this);
+    }
 }
