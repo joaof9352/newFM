@@ -25,6 +25,24 @@ public class Jogo {
     Map<Integer, Integer> substituicoesCasa;
     Map<Integer, Integer> substitucoesFora;
 
+    public Jogo (String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
+        nomeCasa = nC;
+        nomeFora = nF;
+        golosCasa = gc;
+        golosFora = gf;
+        date = d;
+        jogCasa = new ArrayList<>(jc);
+        jogFora = new ArrayList<>(jf);
+        poderCasa = new ArrayList<>(Collections.nCopies(5,0.0));
+        poderFora = new ArrayList<>(Collections.nCopies(5,0.0));
+        minutosGolosCasa = new ArrayList<>();
+        minutosGolosFora = new ArrayList<>();
+        minutosOportunidadesCasa = new ArrayList<>();
+        minutosOportunidadesFora = new ArrayList<>();
+        substituicoesCasa = new HashMap<>(sc);
+        substitucoesFora = new HashMap<>(sf);
+    }
+
     public Jogo (Equipa casa, Equipa fora, String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
         nomeCasa = nC;
         nomeFora = nF;
@@ -43,11 +61,9 @@ public class Jogo {
         substitucoesFora = new HashMap<>(sf);
     }
 
-    public Jogo (String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
+    public Jogo (String nC, String nF, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
         nomeCasa = nC;
         nomeFora = nF;
-        golosCasa = gc;
-        golosFora = gf;
         date = d;
         jogCasa = new ArrayList<>(jc);
         jogFora = new ArrayList<>(jf);
