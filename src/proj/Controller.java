@@ -4,7 +4,7 @@ public class Controller {
     
     public void start() {
 
-        Menu mainMenu = new Menu("Jogar", "Consultar Equipa", "Consultar Jogador", "Consultar Jogos", "Carregar ficheiro", "Salvar");
+        Menu mainMenu = new Menu("Jogar", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Carregar ficheiro", "Salvar");
         boolean sair = true;
 
         while(sair){
@@ -19,6 +19,7 @@ public class Controller {
                 
                 case(3): // Consultar jogador
                     ControllerJogador.start(Parser.getEquipas());
+                    break;
             
                 case(4): // Consultar jogos
 
