@@ -34,8 +34,8 @@ public class Minuto {
     //0 se não houver oportunidade, 1 se houver da casa, 2 se houver fora
     public int oportunidade(){
 
-        int casaCriar = (int) (probCasaCriar * 100);
-        int foraCriar = casaCriar + (int) (probForaCriar * 100);
+        int casaCriar = (int) (probCasaCriar * 100); //25
+        int foraCriar = casaCriar + (int) (probForaCriar * 100); // 26
         int temp = 0, ngerador;
 
         Random gerador = new Random();

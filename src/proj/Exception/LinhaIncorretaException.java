@@ -1,4 +1,4 @@
-package proj;
+package proj.Exception;
 
 public class LinhaIncorretaException extends Exception {
     public LinhaIncorretaException(){

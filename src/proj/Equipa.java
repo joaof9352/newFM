@@ -1,13 +1,30 @@
 package proj;
 
-import java.util.ArrayList;
-import java.util.List;
+import jdk.nashorn.internal.runtime.options.Option;
+import proj.Exception.EquipaSemJogadoresException;
+import proj.Exception.NumeroSemJogadorException;
+import proj.Exception.PosicaoSemJogadoresException;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Equipa {
 
     private String nome;
     private List<Jogador> jogadores;
+    private List<Integer> titulares;
+
+    public double calculaHabilidade (Class<?> posicao) throws PosicaoSemJogadoresException, NumeroSemJogadorException {
+        try {
+            OptionalDouble db = this.titulares.stream().map(this::getJogadorByNum).filter(posicao::isInstance).mapToDouble(Jogador::calculaHabilidade).average();
+        }catch(NumeroSemJogadorException e){
+
+        }
+        if(!db.isPresent()){
+            throw new PosicaoSemJogadoresException("Erro a calcular habilidade na posição " + posicao.toString());
+        }
+        return db.getAsDouble();
+    }
 
     public Equipa(String nomeE) {
         nome=nomeE;
@@ -23,18 +40,29 @@ public class Equipa {
         jogadores.add(j.clone());
     }
 
-    public Jogador getJogadorByNum(int num){
-        Jogador j = null;
-        for(Jogador k : this.jogadores){
-            if(k.getNumeroJogador() == num){
-                j = k.clone();
-            }
+    public Jogador getJogadorByNum(int num) throws NumeroSemJogadorException {
+
+        Optional<Jogador> j = this.jogadores.stream().filter(k -> k.getNumeroJogador() == num).findFirst();
+        if(!j.isPresent()){
+            throw new NumeroSemJogadorException() ;
         }
-        return j;
+
+        return j.get();
     }
 
     public List<Jogador> getJogadores(){
         return this.jogadores.stream().map(Jogador::clone).collect(Collectors.toList());
+    }
+
+    public List<Jogador> getJogadoresPosicao(Class<?> posicao, int n) throws EquipaSemJogadoresException {
+        List<Jogador> p;
+        try{
+            p = this.jogadores.stream().filter(posicao::isInstance).map(Jogador::clone).collect(Collectors.toList()).subList(0,n-1);
+        }catch(IndexOutOfBoundsException e){
+            throw new EquipaSemJogadoresException(posicao.toString());
+        }
+
+        return p;
     }
 
     public String getNome(){
@@ -49,4 +77,12 @@ public class Equipa {
         return r;
     }
 
+    public void fillTitulares() throws EquipaSemJogadoresException {
+        /* Guarda-Redes */
+        List<Jogador> gr = getJogadoresPosicao(GuardaRedes.class, 1);
+        List<Jogador> lat = getJogadoresPosicao(Lateral.class, 2);
+        List<Jogador> zag = getJogadoresPosicao(Defesa.class, 2);
+        List<Jogador> med = getJogadoresPosicao(Medio.class, 3);
+        List<Jogador> ava = getJogadoresPosicao(Avancado.class, 3);
+    }
 }

@@ -1,11 +1,15 @@
 package proj;
 
+import java.util.Comparator;
+
 public abstract class Jogador {
 
     private String nomeJogador;
     private int numeroJogador;
     private int velocidade, resistencia, destreza, impulsao, cabeca, remate, passe;
     private String[] historico;
+
+    public static Comparator<Jogador> compJogador = (Jogador j1, Jogador j2) -> (int) (j1.calculaHabilidade() - j2.calculaHabilidade());
 
     public Jogador(String nomeJ, int numeroJ, int vel, int res, int des, int imp, int cab, int rem, int p){
         nomeJogador = nomeJ;
