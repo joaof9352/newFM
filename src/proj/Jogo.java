@@ -160,9 +160,10 @@ public class Jogo {
     }
 
     public String toString() {
-        return  "Jogo:" + nomeCasa + " - " + nomeFora;
-        //+ " -> " + substituicoesCasa.toString()
-        //+ " -> " + substitucoesFora.toString();
+        StringBuilder sb = new StringBuilder("[" + this.date.toString() + "] ");
+        sb.append(this.equipaCasa + " " + this.golosCasa + " : ");
+        sb.append(this.golosFora + " " + this.equipaFora + "\n");
+        return sb.toString();
     }
 
     public void run(){
