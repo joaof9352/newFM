@@ -46,5 +46,11 @@ public class View {
         }
         System.out.println(sb.toString());
     }
+
+    public static void showJogos(ArrayList<Jogo> jogos) {
+        for(Jogo j : jogos) {
+            System.out.println(j.toString());
+        }
+    }
 }
 

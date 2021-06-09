@@ -22,6 +22,10 @@ public class Controller {
                     break;
             
                 case(4): // Consultar jogos
+                    List<Jogo> jogos = new ArrayList<>(Parser.getJogos());
+                    View.showJogos(jogos);
+                    View.pressAnyKey();
+                    break;
 
                 case(5): // Carregar ficheiro
 
