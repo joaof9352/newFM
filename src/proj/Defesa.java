@@ -11,7 +11,9 @@ public class Defesa extends Jogador {
 
     @Override
     public double calculaHabilidade() {
-        return 0;
+        return 0.8*(double) ((this.getPasse()+ this.getCabeca() +this.getImpulsao() + this.getVelocidade())/4)
+                + 0.2*(double) ((this.getCabeca() + this.getDestreza() + this.getRemate())/3);
+
     }
 
     public static Defesa parse(String input){
