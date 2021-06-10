@@ -45,6 +45,15 @@ public class View {
         return s;
     }
 
+    public static String getNomeFicheiro() {
+        StringBuilder sb = new StringBuilder("Insira o nome do ficheiro a carregar: \n");
+        System.out.println(sb.toString());
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine();
+        scanner.close();
+        return s;
+    }
+
     public static void showJogadores(String nome, Map<String,Jogador> jogadores) {
 
         StringBuilder sb = new StringBuilder("------- Jogadores com o nome " + nome + "-------\n");
@@ -60,6 +69,23 @@ public class View {
         for(Jogo j : jogos) {
             System.out.println(j.toString());
         }
+    }
+
+    public static void messages(int message) {
+        StringBuilder sb = new StringBuilder();
+        switch(message) {
+            case(1): sb.append("Ficheiro lido com sucesso.\n"); break;
+        }
+        System.out.println(sb.toString());
+    }
+
+    public static void handler(int error) {
+        StringBuilder sb = new StringBuilder();
+        switch(error) {
+            case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
+            case(2): sb.append("A equipa não existe.\n");
+        }
+        System.out.println(sb.toString());
     }
 }
 
