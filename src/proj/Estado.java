@@ -9,7 +9,7 @@ public class Estado {
     private Map<Integer, Jogador> jogadores;
     private List<Jogo> jogos;
 
-    public Estado(){
+    public Estado() {
         this.equipas = new HashMap<>();
         this.jogadores = new HashMap<>();
         this.jogos = new ArrayList<>();
