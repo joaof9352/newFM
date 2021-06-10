@@ -1,13 +1,14 @@
 package proj;
 
-import java.util.Map;
+import proj.Exception.EquipaNaoExisteException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
 public class ControllerEquipa {
 
-    public static void start(HashMap<String, Equipa> equipas) throws EquipaNaoExisteException{
+    public static void start(HashMap<String, Equipa> equipas) throws EquipaNaoExisteException {
     Menu menuEquipa = new Menu("Consultar lista de equipas", "Consultar equipa por nome");
 
         boolean sair = true;

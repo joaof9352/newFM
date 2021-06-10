@@ -1,5 +1,6 @@
 package proj;
 
+import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
 
 import java.time.LocalDate;
@@ -122,7 +123,7 @@ public class Jogo {
         }
     }
 
-    public void calculaPoder() throws PosicaoSemJogadoresException {
+    public void calculaPoder() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         poderCasa.set(0, equipaCasa.calculaHabilidade(GuardaRedes.class));
         poderCasa.set(1, equipaCasa.calculaHabilidade(Lateral.class));
         poderCasa.set(2, equipaCasa.calculaHabilidade(Defesa.class));
