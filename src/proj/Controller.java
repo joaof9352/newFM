@@ -1,9 +1,7 @@
 package proj;
 import java.util.List;
-
 import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.LinhaIncorretaException;
-
 import java.util.ArrayList;
 
 public class Controller {

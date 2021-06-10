@@ -31,10 +31,9 @@ public class Estado {
     }
 
     public List<Jogo> getJogos() {
-        List<Jogo> result = new ArrayList<>();
-        this.jogos.stream().map(Jogo::clone).collect(Collectors.toList());
-        return result;
+        return this.jogos.stream().map(Jogo::clone).collect(Collectors.toList());
     }
+
 }
 
 

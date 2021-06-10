@@ -87,5 +87,9 @@ public class View {
         }
         System.out.println(sb.toString());
     }
+
+    public static void showJogo(Jogo jogo) {
+        
+    }
 }
 
