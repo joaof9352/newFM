@@ -14,6 +14,10 @@ public class Equipa {
     private List<Jogador> jogadores;
     private List<Integer> titulares;
 
+    public List<Integer> getTitulares() {
+        return this.titulares;
+    }
+
     public double calculaHabilidade (Class<?> posicao) throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         List<Jogador> titularesJog = new ArrayList<>();
         for(Integer i : titulares) {

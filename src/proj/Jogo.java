@@ -2,6 +2,7 @@ package proj;
 
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
+import proj.Exception.JogadorNaoExisteException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -26,7 +27,23 @@ public class Jogo {
     private List<Double> poderCasa;
     private List<Double> poderFora;
     Map<Integer, Integer> substituicoesCasa;
-    Map<Integer, Integer> substitucoesFora;
+    Map<Integer, Integer> substituicoesFora;
+
+    public Jogo(Equipa e1, Equipa e2, LocalDate data){
+        golosCasa = 0;
+        golosFora = 0;
+        date = data;
+        jogCasa = new ArrayList<>(e1.getTitulares());
+        jogFora = new ArrayList<>(e2.getTitulares());
+        poderCasa = new ArrayList<>(5);
+        poderFora = new ArrayList<>(5);
+        minutosGolosCasa = new ArrayList<>();
+        minutosGolosFora = new ArrayList<>();
+        minutosOportunidadesCasa = new ArrayList<>();
+        minutosOportunidadesFora = new ArrayList<>();
+        substituicoesCasa = new HashMap<>();
+        substituicoesFora = new HashMap<>();
+    }
 
     public Jogo (String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
         nomeCasa = nC;
@@ -43,7 +60,7 @@ public class Jogo {
         minutosOportunidadesCasa = new ArrayList<>();
         minutosOportunidadesFora = new ArrayList<>();
         substituicoesCasa = new HashMap<>(sc);
-        substitucoesFora = new HashMap<>(sf);
+        substituicoesFora = new HashMap<>(sf);
     }
 
     public Jogo (Equipa casa, Equipa fora, String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
@@ -61,7 +78,7 @@ public class Jogo {
         minutosOportunidadesCasa = new ArrayList<>();
         minutosOportunidadesFora = new ArrayList<>();
         substituicoesCasa = new HashMap<>(sc);
-        substitucoesFora = new HashMap<>(sf);
+        substituicoesFora = new HashMap<>(sf);
     }
 
     public Jogo (String nC, String nF, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
@@ -71,7 +88,7 @@ public class Jogo {
         jogCasa = new ArrayList<>(jc);
         jogFora = new ArrayList<>(jf);
         substituicoesCasa = new HashMap<>(sc);
-        substitucoesFora = new HashMap<>(sf);
+        substituicoesFora = new HashMap<>(sf);
     }
 
     public static Jogo parse(String input){
@@ -112,20 +129,45 @@ public class Jogo {
         return sb.toString();
     }
 
-    //Exception para ser tratada
-    public void run() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
+    public void runTotalParaSimulacao() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
+        runMetadePermiteSubs();
+        runMetadePermiteSubs();
+    }
+
+    public void runMetadePermiteSubs() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         calculaPoder();
-        for(int i = 0; i < 90; i++){
+        for(int i = 0; i < 45; i++){
             Minuto m = new Minuto(poderCasa,poderFora);
             if(m.getOportunidadeParaQuem() == 1) {
                 minutosOportunidadesCasa.add(i);
-                if (m.getGolo() == 1)
+                if (m.getGolo() == 1) {
+                    golosCasa++;
                     minutosGolosCasa.add(i);
+                }
             } else if(m.getOportunidadeParaQuem() == 2){
                 minutosOportunidadesFora.add(i);
-                if(m.getGolo() == 1)
+                if(m.getGolo() == 1){
+                    golosFora++;
                     minutosGolosFora.add(i);
+                }
+
             }
+        }
+    }
+
+    public void substituicao(int equipa, int nmrSair, int nmrEntrar) throws JogadorNaoExisteException {
+        if((equipa == 0 && !this.jogCasa.contains(nmrSair)) || (equipa == 1 && !this.jogFora.contains(nmrSair)))
+            throw new JogadorNaoExisteException("O jogador nmr " + nmrSair + " não existe!");
+
+        if((equipa == 0 && !this.equipaCasa.getJogadores().stream().map(Jogador::getNumeroJogador).anyMatch(x -> x == nmrSair)) || (equipa == 1 && !this.equipaCasa.getJogadores().stream().map(Jogador::getNumeroJogador).anyMatch(x -> x == nmrSair)))
+            throw new JogadorNaoExisteException("O jogador nmr " + nmrSair + " não existe!");
+
+        if(equipa == 0){
+            this.jogCasa.set(this.jogCasa.indexOf(nmrSair),nmrEntrar);
+            substituicoesCasa.put(nmrSair,nmrEntrar);
+        }else{
+            this.jogFora.set(this.jogFora.indexOf(nmrSair),nmrEntrar);
+            substituicoesFora.put(nmrSair,nmrEntrar);
         }
     }
 
@@ -143,4 +185,11 @@ public class Jogo {
         poderFora.set(4, equipaFora.calculaHabilidade(Avancado.class));
     }
 
+    public int getGolosCasa() {
+        return this.golosCasa;
+    }
+
+    public int getGolosFora(){
+        return this.golosFora;
+    }
 }
