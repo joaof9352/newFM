@@ -1,4 +1,7 @@
 package proj;
+import proj.Exception.EquipaNaoExisteException;
+import proj.Exception.NumeroSemJogadorException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -7,18 +10,15 @@ import java.util.stream.Collectors;
 
 public class Estado {
     private Map<String, Equipa> equipas;
-    private Map<Integer, Jogador> jogadores;
     private List<Jogo> jogos;
 
     public Estado() {
         this.equipas = new HashMap<>();
-        this.jogadores = new HashMap<>();
         this.jogos = new ArrayList<>();
     }
 
     public Estado(Map<String, Equipa> newEquipas, Map<Integer, Jogador> newJogadores, List<Jogo> newJogos){
         this.equipas = new HashMap<>(newEquipas);
-        this.jogadores = new HashMap<>(newJogadores);
         this.jogos = new ArrayList<>(newJogos);
     }
 
@@ -34,6 +34,13 @@ public class Estado {
         List<Jogo> result = new ArrayList<>();
         this.jogos.stream().map(Jogo::clone).collect(Collectors.toList());
         return result;
+    }
+
+    public void transferencia(int num, String equipaDe, String equipaPara) throws EquipaNaoExisteException, NumeroSemJogadorException {
+        if(!equipas.containsKey(equipaDe) || !equipas.containsKey(equipaPara))
+            throw new EquipaNaoExisteException("A equipa não existe");
+
+        equipas.get(equipaPara).insereJogador(equipas.get(equipaDe).jogadorVaiSair(num));
     }
 }
 

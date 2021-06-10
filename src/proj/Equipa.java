@@ -90,4 +90,12 @@ public class Equipa {
         List<Jogador> med = getJogadoresPosicao(Medio.class, 3);
         List<Jogador> ava = getJogadoresPosicao(Avancado.class, 3);
     }
+
+    public Jogador jogadorVaiSair(int num) throws NumeroSemJogadorException {
+        Jogador j = this.getJogadorByNum(num);
+        j.addHistorial(this.getNome());
+        Jogador jc = j.clone();
+        this.jogadores.remove(j);
+        return jc;
+    }
 }

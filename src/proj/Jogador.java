@@ -1,13 +1,15 @@
 package proj;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public abstract class Jogador {
 
     private String nomeJogador;
     private int numeroJogador;
     private int velocidade, resistencia, destreza, impulsao, cabeca, remate, passe;
-    private String[] historico;
+    private List<String> historico;
 
     public static Comparator<Jogador> compJogador = (Jogador j1, Jogador j2) -> (int) (j1.calculaHabilidade() - j2.calculaHabilidade());
 
@@ -21,6 +23,7 @@ public abstract class Jogador {
         cabeca = cab;
         remate = rem;
         passe = p;
+        historico = new ArrayList<>();
     }
 
     public abstract double calculaHabilidade();
@@ -35,6 +38,7 @@ public abstract class Jogador {
         cabeca = j.getCabeca();
         remate = j.getRemate();
         passe = j.getPasse();
+        historico = j.getHistorico();
     }
 
     public String getNomeJogador() {
@@ -121,8 +125,24 @@ public abstract class Jogador {
 
     public abstract Jogador clone();
 
+    public List<String> getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(List<String> historico) {
+        this.historico = historico;
+    }
+
+    public void addHistorial(String clube){
+        this.historico.add(clube);
+    }
+
     public String toString(){
-        return nomeJogador +"\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getNumeroJogador()).append(" | ").append(this.getNomeJogador()).append(" | ")
+                .append(this.calculaHabilidade());
+
+        return sb.toString();
     }
 
 }

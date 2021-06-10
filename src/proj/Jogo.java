@@ -26,15 +26,14 @@ public class Jogo {
     private List<Integer> minutosGolosFora;
     private List<Integer> minutosOportunidadesCasa;
     private List<Integer> minutosOportunidadesFora;
-
     private Estado estadoJogo;
     private LocalDate date;
     private List<Integer> jogCasa;
     private List<Integer> jogFora;
     private List<Double> poderCasa;
     private List<Double> poderFora;
-    Map<Integer, Integer> substituicoesCasa;
-    Map<Integer, Integer> substituicoesFora;
+    private Map<Integer, Integer> substituicoesCasa;
+    private Map<Integer, Integer> substituicoesFora;
 
     public Jogo(Equipa e1, Equipa e2, LocalDate data){
         golosCasa = 0;
@@ -91,6 +90,27 @@ public class Jogo {
         this.estadoJogo = Estado.TERMINADO;
     }
 
+    public Jogo(Jogo j){
+        this.equipaCasa = j.getEquipaCasa();
+        this.equipaFora = j.getEquipaFora();
+        this.nomeCasa = j.getNomeCasa();
+        this.nomeFora = j.getNomeFora();
+        this.golosCasa = j.getGolosCasa();
+        this.golosFora = j.getGolosFora();
+        this.date = j.getDate();
+        this.jogCasa = j.getJogCasa();
+        this.jogFora = j.getJogFora();
+        this.poderCasa = j.getPoderCasa();
+        this.poderFora = j.getPoderFora();
+        this.minutosGolosCasa = j.getMinutosGolosCasa();
+        this.minutosGolosFora = j.getMinutosGolosFora();
+        this.minutosOportunidadesCasa = j.getMinutosOportunidadesCasa();
+        this.minutosOportunidadesFora = j.getMinutosOportunidadesFora();
+        this.substituicoesCasa = j.getSubstituicoesCasa();
+        this.substituicoesFora = j.getSubstituicoesFora();
+        this.estadoJogo = j.getEstadoJogo();
+    }
+
     public Jogo (String nC, String nF, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
         nomeCasa = nC;
         nomeFora = nF;
@@ -99,6 +119,7 @@ public class Jogo {
         jogFora = new ArrayList<>(jf);
         substituicoesCasa = new HashMap<>(sc);
         substituicoesFora = new HashMap<>(sf);
+        this.estadoJogo = Estado.TERMINADO;
     }
 
     public static Jogo parse(String input){
@@ -200,19 +221,152 @@ public class Jogo {
         poderFora.set(4, equipaFora.calculaHabilidade(Avancado.class));
     }
 
-    public int getGolosCasa() {
-        return this.golosCasa;
+    public Equipa getEquipaCasa() {
+        return equipaCasa;
     }
 
-    public int getGolosFora(){
-        return this.golosFora;
+    public void setEquipaCasa(Equipa equipaCasa) {
+        this.equipaCasa = equipaCasa;
+    }
+
+    public Equipa getEquipaFora() {
+        return equipaFora;
+    }
+
+    public void setEquipaFora(Equipa equipaFora) {
+        this.equipaFora = equipaFora;
+    }
+
+    public String getNomeCasa() {
+        return nomeCasa;
+    }
+
+    public void setNomeCasa(String nomeCasa) {
+        this.nomeCasa = nomeCasa;
+    }
+
+    public String getNomeFora() {
+        return nomeFora;
+    }
+
+    public void setNomeFora(String nomeFora) {
+        this.nomeFora = nomeFora;
+    }
+
+    public int getGolosCasa() {
+        return golosCasa;
+    }
+
+    public void setGolosCasa(int golosCasa) {
+        this.golosCasa = golosCasa;
+    }
+
+    public int getGolosFora() {
+        return golosFora;
+    }
+
+    public void setGolosFora(int golosFora) {
+        this.golosFora = golosFora;
+    }
+
+    public List<Integer> getMinutosGolosCasa() {
+        return minutosGolosCasa;
+    }
+
+    public void setMinutosGolosCasa(List<Integer> minutosGolosCasa) {
+        this.minutosGolosCasa = minutosGolosCasa;
+    }
+
+    public List<Integer> getMinutosGolosFora() {
+        return minutosGolosFora;
+    }
+
+    public void setMinutosGolosFora(List<Integer> minutosGolosFora) {
+        this.minutosGolosFora = minutosGolosFora;
+    }
+
+    public List<Integer> getMinutosOportunidadesCasa() {
+        return minutosOportunidadesCasa;
+    }
+
+    public void setMinutosOportunidadesCasa(List<Integer> minutosOportunidadesCasa) {
+        this.minutosOportunidadesCasa = minutosOportunidadesCasa;
+    }
+
+    public List<Integer> getMinutosOportunidadesFora() {
+        return minutosOportunidadesFora;
+    }
+
+    public void setMinutosOportunidadesFora(List<Integer> minutosOportunidadesFora) {
+        this.minutosOportunidadesFora = minutosOportunidadesFora;
+    }
+
+    public Estado getEstadoJogo() {
+        return estadoJogo;
     }
 
     public void setEstadoJogo(Estado estadoJogo) {
         this.estadoJogo = estadoJogo;
     }
 
-    public Estado getEstadoJogo() {
-        return this.estadoJogo;
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public List<Integer> getJogCasa() {
+        return jogCasa;
+    }
+
+    public void setJogCasa(List<Integer> jogCasa) {
+        this.jogCasa = jogCasa;
+    }
+
+    public List<Integer> getJogFora() {
+        return jogFora;
+    }
+
+    public void setJogFora(List<Integer> jogFora) {
+        this.jogFora = jogFora;
+    }
+
+    public List<Double> getPoderCasa() {
+        return poderCasa;
+    }
+
+    public void setPoderCasa(List<Double> poderCasa) {
+        this.poderCasa = poderCasa;
+    }
+
+    public List<Double> getPoderFora() {
+        return poderFora;
+    }
+
+    public void setPoderFora(List<Double> poderFora) {
+        this.poderFora = poderFora;
+    }
+
+    public Map<Integer, Integer> getSubstituicoesCasa() {
+        return substituicoesCasa;
+    }
+
+    public void setSubstituicoesCasa(Map<Integer, Integer> substituicoesCasa) {
+        this.substituicoesCasa = substituicoesCasa;
+    }
+
+    public Map<Integer, Integer> getSubstituicoesFora() {
+        return substituicoesFora;
+    }
+
+    public void setSubstituicoesFora(Map<Integer, Integer> substituicoesFora) {
+        this.substituicoesFora = substituicoesFora;
+    }
+
+    @Override
+    public Jogo clone(){
+        return new Jogo(this);
     }
 }
