@@ -11,7 +11,8 @@ public class Avancado extends Jogador {
 
     @Override
     public double calculaHabilidade() {
-        return 0;
+        return 0.8*(double) ((this.getImpulsao()+this.getCabeca()+this.getRemate() + this.getVelocidade())/4)
+                + 0.2*(double) ((this.getPasse() + this.getResistencia() + this.getDestreza())/3);
     }
 
     public static Avancado parse(String input){

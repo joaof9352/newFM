@@ -106,8 +106,14 @@ public class Jogo {
         //+ " -> " + substitucoesFora.toString();
     }
 
+    public String getResultadoRapido(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(equipaCasa.getNome()).append(" ").append(golosCasa).append(" - ").append(golosFora).append(" ").append(equipaFora.getNome());
+        return sb.toString();
+    }
+
     //Exception para ser tratada
-    public void run() throws PosicaoSemJogadoresException {
+    public void run() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         calculaPoder();
         for(int i = 0; i < 90; i++){
             Minuto m = new Minuto(poderCasa,poderFora);

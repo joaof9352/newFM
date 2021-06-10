@@ -1,5 +1,7 @@
 package proj;
 
+import java.util.Random;
+
 public class GuardaRedes extends Jogador{
 
     private int elasticidade;
@@ -19,11 +21,13 @@ public class GuardaRedes extends Jogador{
 
     @Override
     public double calculaHabilidade() {
-        return 0;
+        return 0.8*(double) ((this.getImpulsao()+this.getDestreza()+this.getElasticidade() + this.getVelocidade())/4)
+                + 0.2*(double) ((this.getPasse() + this.getResistencia())/2);
     }
 
     public static GuardaRedes parse(String input){
         String[] campos = input.split(",");
+        Random r = new Random();
         return new GuardaRedes(campos[0], Integer.parseInt(campos[1]),
                 Integer.parseInt(campos[2]),
                 Integer.parseInt(campos[3]),

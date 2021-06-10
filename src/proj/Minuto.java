@@ -5,9 +5,9 @@ import java.util.Random;
 
 public class Minuto {
     private List<Double> poderCasa, poderFora;
-    private final double fatorCriacao = 0.0028;
-    private final double fatorFinalizacao = 0.0059;
-    private final double fatorCasa = 0.0005; // 0.0018
+    private final double fatorCriacao = 0.000680875533226558;
+    private final double fatorFinalizacao = 0.000485482599307636;
+    private final double fatorCasa = 0.0000717926719073958; // 0.0018
 
     private int oportunidadeParaQuem, golo;
 
@@ -62,9 +62,9 @@ public class Minuto {
     }
 
     private void calculaProbs(){
-        this.probCasaCriar = (poderCasa.get(3) + poderCasa.get(1) - poderFora.get(3) - poderFora.get(1) + 20) * (fatorCriacao + fatorCasa);
-        this.probForaCriar = (poderFora.get(3) + poderFora.get(1) - poderCasa.get(3) - poderCasa.get(1) + 20) * (fatorCriacao);
-        this.probCasaMarcar = (poderCasa.get(4) - poderFora.get(2) - poderFora.get(0) - poderFora.get(1) + 60) * (fatorFinalizacao + fatorCasa);
-        this.probForaMarcar = (poderFora.get(4) - poderCasa.get(2) - poderCasa.get(0) - poderCasa.get(1) + 60) * (fatorFinalizacao);
+        this.probCasaCriar = (poderCasa.get(3) + poderCasa.get(1) - poderFora.get(3) - poderFora.get(1) + 200) * (fatorCriacao + fatorCasa);
+        this.probForaCriar = (poderFora.get(3) + poderFora.get(1) - poderCasa.get(3) - poderCasa.get(1) + 200) * (fatorCriacao);
+        this.probCasaMarcar = (poderCasa.get(4) - poderFora.get(2) - poderFora.get(0) - poderFora.get(1) + 300) * (fatorFinalizacao + fatorCasa);
+        this.probForaMarcar = (poderFora.get(4) - poderCasa.get(2) - poderCasa.get(0) - poderCasa.get(1) + 300) * (fatorFinalizacao);
   }
 }

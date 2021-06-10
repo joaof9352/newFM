@@ -19,7 +19,8 @@ public class Lateral extends Jogador{
 
     @Override
     public double calculaHabilidade() {
-        return 0;
+        return 0.8*(double) ((this.getPasse()+this.getCruzamento()+this.getResistencia() + this.getVelocidade())/4)
+                + 0.2*(double) ((this.getCabeca() + this.getDestreza() + this.getImpulsao() + this.getRemate())/4);
     }
 
     public static Lateral parse(String input){

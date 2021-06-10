@@ -15,11 +15,12 @@ public class Equipa {
     private List<Integer> titulares;
 
     public double calculaHabilidade (Class<?> posicao) throws PosicaoSemJogadoresException, NumeroSemJogadorException {
-        try {
-            OptionalDouble db = this.titulares.stream().map(this::getJogadorByNum).filter(posicao::isInstance).mapToDouble(Jogador::calculaHabilidade).average();
-        }catch(NumeroSemJogadorException e){
-
+        List<Jogador> titularesJog = new ArrayList<>();
+        for(Integer i : titulares) {
+                titularesJog.add(getJogadorByNum(i));
         }
+        OptionalDouble db = titularesJog.stream().filter(posicao::isInstance).mapToDouble(Jogador::calculaHabilidade).average();
+
         if(!db.isPresent()){
             throw new PosicaoSemJogadoresException("Erro a calcular habilidade na posição " + posicao.toString());
         }
@@ -70,11 +71,11 @@ public class Equipa {
     }
 
     public String toString(){
-        String r =  "Equipa:" + nome + "\n";
+        StringBuilder r = new StringBuilder("Equipa:" + nome + "\n");
         for (Jogador j : jogadores){
-            r += j.toString();
+            r.append(j.toString());
         }
-        return r;
+        return r.toString();
     }
 
     public void fillTitulares() throws EquipaSemJogadoresException {

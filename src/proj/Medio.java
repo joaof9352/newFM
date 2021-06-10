@@ -19,7 +19,8 @@ public class Medio extends Jogador {
 
     @Override
     public double calculaHabilidade() {
-        return 0;
+        return 0.8*(double) ((this.getPasse()+this.getRecuperacao()+this.getResistencia())/3)
+                + 0.2*(double) ((this.getCabeca() + this.getDestreza() + this.getVelocidade() + this.getImpulsao() + this.getRemate())/5);
     }
 
     public static Medio parse(String input){
