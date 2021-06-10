@@ -83,7 +83,7 @@ public class View {
         StringBuilder sb = new StringBuilder();
         switch(error) {
             case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
-            case(2): sb.append("A equipa não existe.\n")
+            case(2): sb.append("A equipa não existe.\n");
         }
         System.out.println(sb.toString());
     }
