@@ -3,6 +3,7 @@ package proj;
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
 import proj.Exception.JogadorNaoExisteException;
+import proj.Exception.SubstituicaoImpossivelException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -10,7 +11,11 @@ import java.util.*;
 public class Jogo {
 
     //joga-se sempre em 4-3-3
-
+    public enum Estado{
+        A_INICIAR,
+        INTERVALO,
+        TERMINADO
+    };
     private Equipa equipaCasa;
     private Equipa equipaFora;
     private String nomeCasa;
@@ -21,6 +26,8 @@ public class Jogo {
     private List<Integer> minutosGolosFora;
     private List<Integer> minutosOportunidadesCasa;
     private List<Integer> minutosOportunidadesFora;
+
+    private Estado estadoJogo;
     private LocalDate date;
     private List<Integer> jogCasa;
     private List<Integer> jogFora;
@@ -43,6 +50,7 @@ public class Jogo {
         minutosOportunidadesFora = new ArrayList<>();
         substituicoesCasa = new HashMap<>();
         substituicoesFora = new HashMap<>();
+        this.estadoJogo = Estado.A_INICIAR;
     }
 
     public Jogo (String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
@@ -61,6 +69,7 @@ public class Jogo {
         minutosOportunidadesFora = new ArrayList<>();
         substituicoesCasa = new HashMap<>(sc);
         substituicoesFora = new HashMap<>(sf);
+        this.estadoJogo = Estado.TERMINADO;
     }
 
     public Jogo (Equipa casa, Equipa fora, String nC, String nF, int gc, int gf, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
@@ -79,6 +88,7 @@ public class Jogo {
         minutosOportunidadesFora = new ArrayList<>();
         substituicoesCasa = new HashMap<>(sc);
         substituicoesFora = new HashMap<>(sf);
+        this.estadoJogo = Estado.TERMINADO;
     }
 
     public Jogo (String nC, String nF, LocalDate d,  List<Integer> jc, Map<Integer, Integer> sc,  List<Integer> jf, Map<Integer, Integer> sf){
@@ -136,6 +146,8 @@ public class Jogo {
 
     public void runMetadePermiteSubs() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         calculaPoder();
+        if(this.getEstadoJogo() == Estado.A_INICIAR) this.setEstadoJogo(Estado.INTERVALO);
+        else if(this.getEstadoJogo() == Estado.INTERVALO) this.setEstadoJogo(Estado.TERMINADO);
         for(int i = 0; i < 45; i++){
             Minuto m = new Minuto(poderCasa,poderFora);
             if(m.getOportunidadeParaQuem() == 1) {
@@ -150,12 +162,15 @@ public class Jogo {
                     golosFora++;
                     minutosGolosFora.add(i);
                 }
-
             }
         }
     }
 
-    public void substituicao(int equipa, int nmrSair, int nmrEntrar) throws JogadorNaoExisteException {
+    public void substituicao(int equipa, int nmrSair, int nmrEntrar) throws JogadorNaoExisteException, SubstituicaoImpossivelException {
+
+        if(this.getEstadoJogo() != Estado.INTERVALO)
+            throw new SubstituicaoImpossivelException("Só podes fazer subs no intervalo");
+
         if((equipa == 0 && !this.jogCasa.contains(nmrSair)) || (equipa == 1 && !this.jogFora.contains(nmrSair)))
             throw new JogadorNaoExisteException("O jogador nmr " + nmrSair + " não existe!");
 
@@ -191,5 +206,13 @@ public class Jogo {
 
     public int getGolosFora(){
         return this.golosFora;
+    }
+
+    public void setEstadoJogo(Estado estadoJogo) {
+        this.estadoJogo = estadoJogo;
+    }
+
+    public Estado getEstadoJogo() {
+        return this.estadoJogo;
     }
 }
