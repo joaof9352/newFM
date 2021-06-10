@@ -3,13 +3,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Estado {
     private Map<String, Equipa> equipas;
     private Map<Integer, Jogador> jogadores;
     private List<Jogo> jogos;
 
-    public Estado(){
+    public Estado() {
         this.equipas = new HashMap<>();
         this.jogadores = new HashMap<>();
         this.jogos = new ArrayList<>();
@@ -30,7 +31,9 @@ public class Estado {
     }
 
     public List<Jogo> getJogos() {
-        return this.jogos;
+        List<Jogo> result = new ArrayList<>();
+        this.jogos.stream().map(Jogo::clone).collect(Collectors.toList());
+        return result;
     }
 }
 
