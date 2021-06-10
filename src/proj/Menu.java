@@ -1,6 +1,5 @@
 package proj;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -55,6 +54,7 @@ public class Menu {
             System.out.println("Opção Inválida!!!");
             op = -1;
         }
+        is.close();
         return op;
     }
     
