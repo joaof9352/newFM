@@ -1,10 +1,15 @@
 package proj;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Controller {
-    
-    public void start() {
 
-        Menu mainMenu = new Menu("Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Carregar ficheiro", "Salvar");
+    private static Estado e = new Estado();
+
+    public static void start() throws Exception {
+
+        String opcoes[] = {"Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Carregar ficheiro", "Salvar"};
+        Menu mainMenu = new Menu(opcoes);
         boolean sair = true;
 
         while(sair){
@@ -16,15 +21,15 @@ public class Controller {
                 case(2): // Torneio
 
                 case(3): // Consultar equipa
-                    ControllerEquipa.start(Parser.getEquipas());
+                    ControllerEquipa.start(e.getEquipas());
                     break;
                 
                 case(4): // Consultar jogador por nome
-                    ControllerJogador.start(Parser.getEquipas());
+                    ControllerJogador.start(e.getEquipas());
                     break;
             
                 case(5): // Consultar jogos
-                    List<Jogo> jogos = new ArrayList<>(Parser.getJogos());
+                    List<Jogo> jogos = new ArrayList<>(e.getJogos());
                     View.showJogos(jogos);
                     View.pressAnyKey();
                     break;
