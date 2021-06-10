@@ -1,15 +1,16 @@
 package proj;
 
-import proj.Exception.EquipaNaoExisteException;
-
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
 public class ControllerEquipa {
 
-    public static void start(HashMap<String, Equipa> equipas) throws EquipaNaoExisteException {
-    Menu menuEquipa = new Menu("Consultar lista de equipas", "Consultar equipa por nome");
+    public static void start(Map<String, Equipa> equipas) throws Exception{
+        
+    String opcoes[] = {"Consultar lista de equipas", "Consultar equipa por nome"};
+    Menu menuEquipa = new Menu(opcoes);
 
         boolean sair = true;
         while(sair) {
@@ -22,7 +23,7 @@ public class ControllerEquipa {
                     break;
 
                 case 2: // Consultar equipa por nome
-                    String key = Menu.getNomeEquipa();
+                    String key = View.getNomeEquipa();
                     if(!equipas.containsKey(key)) {throw new EquipaNaoExisteException("A equipa que inseriu não existe.");
                     } else {   
                         String jogadores= equipas.get(key).toString();
