@@ -1,5 +1,9 @@
 package proj;
 import java.util.List;
+
+import proj.Exception.EquipaNaoExisteException;
+import proj.Exception.LinhaIncorretaException;
+
 import java.util.ArrayList;
 
 public class Controller {
@@ -21,7 +25,8 @@ public class Controller {
                 case(2): // Torneio
 
                 case(3): // Consultar equipa
-                    ControllerEquipa.start(e.getEquipas());
+                    try{ControllerEquipa.start(e.getEquipas());}
+                    catch(EquipaNaoExisteException s) {View.handler(2);}
                     break;
                 
                 case(4): // Consultar jogador por nome
@@ -35,6 +40,11 @@ public class Controller {
                     break;
 
                 case(6): // Carregar ficheiro
+                String file = View.getNomeFicheiro();
+                try{Parser.parse(file, e); View.messages(1);}
+                catch(LinhaIncorretaException s) {View.handler(1);}
+                View.pressAnyKey();
+                break;
 
                 case(7): // Salvar
 
