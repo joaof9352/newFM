@@ -17,6 +17,12 @@ public class Equipa {
         return this.titulares;
     }
 
+    private void addTitular(List<Jogador> j){
+        for(Jogador jog : j){
+            this.titulares.add(jog.getNumeroJogador());
+        }
+    }
+
     public double calculaHabilidade (Class<?> posicao) throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         List<Jogador> titularesJog = new ArrayList<>();
         for(Integer i : titulares) {
@@ -99,11 +105,19 @@ public class Equipa {
 
     public void fillTitulares() throws EquipaSemJogadoresException {
         /* Guarda-Redes */
+        this.titulares = new ArrayList<>();
+
         List<Jogador> gr = getJogadoresPosicao(GuardaRedes.class, 1);
         List<Jogador> lat = getJogadoresPosicao(Lateral.class, 2);
         List<Jogador> zag = getJogadoresPosicao(Defesa.class, 2);
         List<Jogador> med = getJogadoresPosicao(Medio.class, 3);
         List<Jogador> ava = getJogadoresPosicao(Avancado.class, 3);
+
+        addTitular(gr);
+        addTitular(lat);
+        addTitular(zag);
+        addTitular(med);
+        addTitular(ava);
     }
 
     public Jogador jogadorVaiSair(int num) throws NumeroSemJogadorException {
