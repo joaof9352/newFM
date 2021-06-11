@@ -17,7 +17,7 @@ public class Estado {
         this.jogos = new ArrayList<>();
     }
 
-    public Estado(Map<String, Equipa> newEquipas, Map<Integer, Jogador> newJogadores, List<Jogo> newJogos){
+    public Estado(Map<String, Equipa> newEquipas, List<Jogo> newJogos){
         this.equipas = new HashMap<>(newEquipas);
         this.jogos = new ArrayList<>(newJogos);
     }
@@ -40,6 +40,7 @@ public class Estado {
 
         equipas.get(equipaPara).insereJogador(equipas.get(equipaDe).jogadorVaiSair(num));
     }
+
 }
 
 

@@ -169,7 +169,9 @@ public class Jogo {
         calculaPoder();
         if(this.getEstadoJogo() == Estado.A_INICIAR) this.setEstadoJogo(Estado.INTERVALO);
         else if(this.getEstadoJogo() == Estado.INTERVALO) this.setEstadoJogo(Estado.TERMINADO);
-        for(int i = 0; i < 45; i++){
+        int i = this.getEstadoJogo() == Estado.A_INICIAR ? 0 : 45;
+        int max = 45+i;
+        for(; i < max; i++){
             Minuto m = new Minuto(poderCasa,poderFora);
             if(m.getOportunidadeParaQuem() == 1) {
                 minutosOportunidadesCasa.add(i);
