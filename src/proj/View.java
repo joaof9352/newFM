@@ -16,7 +16,10 @@ public class View {
         StringBuilder sb = new StringBuilder("Pressione qualquer tecla para continuar.");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
-        scanner.close();
+        System.out.println("teste1");
+        scanner.next();
+        //scanner.close();
+        System.out.println("teste2");
     }
 
     public static void showListaEquipas(List<String> equipas) {
@@ -32,7 +35,7 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
+        //scanner.close();
         return s;
     }
 
@@ -40,7 +43,7 @@ public class View {
         System.out.println("Insira o número de rondas do torneio: ");
         Scanner scanner = new Scanner(System.in);
         int s = scanner.nextInt();
-        scanner.close();
+        //scanner.close();
         return s;
     }
 
@@ -49,7 +52,7 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         int s = scanner.nextInt();
-        scanner.close();
+        //scanner.close();
         return s;
     }
 
@@ -66,7 +69,7 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
+        //scanner.close();
         return s;
     }
 
@@ -75,7 +78,7 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
+        //scanner.close();
         return s;
     }
 
@@ -124,7 +127,7 @@ public class View {
         sb.append("Jogador nr" + nrJog + " escolha a equipa com que pretende jogar:");
 
         int s = scanner.nextInt();
-        scanner.close();
+        //scanner.close();
         return s;
     }
 
@@ -150,13 +153,13 @@ public class View {
         System.out.println(sb.toString());
         int sair = scanner.nextInt();
         if(sair == -1) {
-            scanner.close();
+            //scanner.close();
             return result;
         }
         result[0] = sair;
         System.out.println("Jogador a entrar: \n");
         int entrar = scanner.nextInt();
-        scanner.close();
+        //scanner.close();
         result[1] = entrar;
         return result;
     }
