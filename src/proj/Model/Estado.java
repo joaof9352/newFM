@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.NumeroSemJogadorException;
 
@@ -29,6 +29,14 @@ public class Estado {
             result.put(equipa.getKey(), equipa.getValue());
         }
         return result;
+    }
+
+    public void setEquipas(Map<String, Equipa> equipas){
+        this.equipas = equipas; //trocar isto
+    }
+
+    public void setJogos(List<Jogo> jogos){
+        this.jogos = jogos;
     }
 
     public List<Jogo> getJogos() {

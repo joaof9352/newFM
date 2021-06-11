@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 import proj.Exception.NumeroSemJogadorException;
+import proj.Model.Equipa;
+import proj.Model.Jogador;
+import proj.Model.Jogo;
 
 
 public class View {
@@ -53,13 +56,13 @@ public class View {
         return s;
     }
 
-    public static void showJogadores(String nome, Map<String,Jogador> jogadores) {
+    public static void showJogadores(String nome, Map<String, Jogador> jogadores) {
 
         StringBuilder sb = new StringBuilder("------- Jogadores com o nome " + nome + "-------\n");
 
         for(Map.Entry<String,Jogador> entry : jogadores.entrySet()) {
-            sb.append(entry.getKey() + ": \n");
-            sb.append(entry.getValue().toString() + "\n");
+            sb.append(entry.getKey()).append(": ");
+            sb.append(entry.getValue().toString()).append("\n");
         }
         System.out.println(sb.toString());
     }

@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;

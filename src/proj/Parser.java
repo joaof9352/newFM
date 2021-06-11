@@ -1,6 +1,7 @@
 package proj;
 
 import proj.Exception.LinhaIncorretaException;
+import proj.Model.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -68,7 +69,9 @@ public class Parser {
             }
         }
 
-        //debug
+        est.setEquipas(equipas);
+        est.setJogos(jogos);//debug
+
         for (Equipa e: equipas.values()){
             System.out.println(e.toString());
         }

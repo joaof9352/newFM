@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 public class Avancado extends Jogador {
     public Avancado(String nomeJ, int numeroJ, int vel, int res, int des, int imp, int cab, int rem, int p) {

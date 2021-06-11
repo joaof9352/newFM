@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 public class Defesa extends Jogador {
     public Defesa(String nomeJ, int numeroJ, int vel, int res, int des, int imp, int cab, int rem, int p) {

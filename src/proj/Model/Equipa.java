@@ -1,6 +1,5 @@
-package proj;
+package proj.Model;
 
-import jdk.nashorn.internal.runtime.options.Option;
 import proj.Exception.EquipaSemJogadoresException;
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;

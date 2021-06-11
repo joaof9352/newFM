@@ -2,6 +2,9 @@ package proj;
 import java.util.List;
 import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.LinhaIncorretaException;
+import proj.Model.Estado;
+import proj.Model.Jogo;
+
 import java.util.ArrayList;
 
 public class Controller {
@@ -42,7 +45,7 @@ public class Controller {
 
                 case(6): // Carregar ficheiro
                 String file = View.getNomeFicheiro();
-                try{Parser.parse(file, e); View.messages(1);}
+                try{Parser.parse("C:\\Users\\joaof\\Desktop\\newFM\\out\\production\\newFM\\proj\\logs.txt", e); View.messages(1);}
                 catch(LinhaIncorretaException s) {View.handler(1);}
                 View.pressAnyKey();
                 break;

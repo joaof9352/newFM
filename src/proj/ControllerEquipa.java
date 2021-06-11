@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import proj.Exception.EquipaNaoExisteException;
+import proj.Model.Equipa;
 
 
 public class ControllerEquipa {

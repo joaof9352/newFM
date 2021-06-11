@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 import java.util.List;
 import java.util.Random;

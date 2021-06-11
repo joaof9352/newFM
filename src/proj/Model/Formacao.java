@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 public class Formacao {
     private int formacao;
