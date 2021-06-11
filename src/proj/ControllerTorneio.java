@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import proj.Exception.EquipaNaoExisteException;
+import proj.Exception.EquipasInsuficientesException;
 import proj.Exception.RondaNaoValidaException;
+import proj.Model.Equipa;
+import proj.Model.Torneio;
 
 public class ControllerTorneio {
 
@@ -34,7 +37,7 @@ public class ControllerTorneio {
         }
     }
 
-    public static void startTorneio(Map<String, Equipa> equipas) throws EquipaNaoExisteException{
+    public static void startTorneio(Map<String, Equipa> equipas) throws EquipaNaoExisteException, Exception{
 
         String opcoes[] = {"Escolher uma equipa", "Equipa aleatória"};
         Menu mainMenu = new Menu(opcoes);
@@ -53,16 +56,18 @@ public class ControllerTorneio {
                     } else {   
                         int nRondas = View.getNRondasTorneio();
                         Torneio t = new Torneio(equipas, nRondas, equipas.get(nomeEquipa));
-                        //menu do torneio
+                        menuTorneio(t);
                         sair = false;
                     }
                     break;
 
                 case(2): // Começar torneio com equipa aleatória
-                    int nRondasA = View.getNRondasTorneio();
-                    Torneio tA = new Torneio(equipas, nRondasA);
-                    //menu torneio
-                    sair = false;
+                    try {
+                        int nRondasA = View.getNRondasTorneio();
+                        Torneio tA = new Torneio(equipas, nRondasA);
+                        menuTorneio(tA);
+                        sair = false;
+                    } catch (EquipasInsuficientesException e) {View.handler(4);}
                     break;
 
                 case(0): //Sair
@@ -75,15 +80,26 @@ public class ControllerTorneio {
 
     public static void menuTorneio(Torneio t) throws Exception{ //ver como fazer quando for o ultimo jogo do torneio
         String opcoes[] = {"Jogar próxima ronda", "Ver jogos da próxima ronda", "Ver resultados de uma ronda", "Consultar as equipas do torneio", "Salvar torneio"};
-        Menu mainMenu = new Menu(opcoes);
+        Menu torneioMenu = new Menu(opcoes);
         boolean sair = true;
 
         while(sair){
-            mainMenu.executa();
-
-            switch(mainMenu.getOpcao()) {//colocar exception para número de rondas
+            torneioMenu.executa();
+            System.out.println("AQUI");
+            switch(torneioMenu.getOpcao()) {
                 case(1): // Jogar proxima ronda
-                    //correr a ronda, ver se está pronto
+                    boolean participa = t.jogadorAindaParticipa();
+                    /*if(participa){
+
+                    }*/
+                    
+                    t.simulaRonda(participa);
+                    
+                    try{
+                        String rRonda = t.resultadosRondaToString(t.getRonda() - 1);
+                        View.showRonda(rRonda);
+                        View.pressAnyKey();
+                    } catch (RondaNaoValidaException r) {View.handler(3);}
                     break;
 
                 case(2): // Ver jogos proxima ronda
@@ -107,6 +123,7 @@ public class ControllerTorneio {
                     break;
                 
                 case(5): // Salvar torneio
+                    //falta fazer
                     break;
                 case(0): //Sair
                     sair = false;

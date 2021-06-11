@@ -35,6 +35,11 @@ public class Equipa {
         jogadores = new ArrayList<>();
     }
 
+    public Equipa(Equipa e){
+        this.nome = e.getNome();
+        this.setJogadores(e.getJogadores());
+    }
+
     public static Equipa parse(String input){
         String[] campos = input.split(",");
         return new Equipa(campos[0]);
@@ -57,6 +62,13 @@ public class Equipa {
     public List<Jogador> getJogadores(){
         return this.jogadores.stream().map(Jogador::clone).collect(Collectors.toList());
     }
+    
+    public void setJogadores(List<Jogador> nJogadores) {
+        this.jogadores = new ArrayList<>();
+
+        for(Jogador j : nJogadores)
+            this.jogadores.add(j.clone());
+    }
 
     public List<Jogador> getJogadoresPosicao(Class<?> posicao, int n) throws EquipaSemJogadoresException {
         List<Jogador> p;
@@ -71,6 +83,10 @@ public class Equipa {
 
     public String getNome(){
         return nome;
+    }
+
+    public Equipa clone(){
+        return new Equipa(this);
     }
 
     public String toString(){

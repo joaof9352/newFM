@@ -1,7 +1,5 @@
 package proj.Model;
 
-import proj.Model.Equipa;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import proj.Exception.EquipasInsuficientesException;
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
 import proj.Exception.RondaNaoValidaException;
@@ -26,7 +25,10 @@ public class Torneio {
     //contrutores
 
     //equipas todas random
-    public Torneio(Map<String, Equipa> equipas, int nRondas){
+    public Torneio(Map<String, Equipa> equipas, int nRondas) throws EquipasInsuficientesException{
+        if(Math.pow(2, nRondas - 1) > equipas.values().size())
+            throw new EquipasInsuficientesException("Não há equipas suficientes para fazer este número de rondas");
+
         this.ronda = 0;
         this.equipas = new HashMap<>();
         this.chave = new ArrayList<>();
@@ -145,7 +147,7 @@ public class Torneio {
         Jogo j;
         int i = 0, eP = 0;
         
-        if (participa) i = 1;
+        //if (participa) i = 1;
 
         for(; i < rondaS.size(); i++){
             String[] equipasJogo = rondaS.get(i);

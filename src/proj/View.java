@@ -12,12 +12,11 @@ import proj.Model.Jogo;
 
 public class View {
 
-    public static String pressAnyKey() {
-        StringBuilder sb = new StringBuilder("Pressione qualquer tecla para continuar: \n");
+    public static void pressAnyKey() {
+        StringBuilder sb = new StringBuilder("Pressione qualquer tecla para continuar.");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
-        String s = scanner.nextLine();
-        return s;
+        scanner.close();
     }
 
     public static void showListaEquipas(List<String> equipas) {
@@ -33,12 +32,12 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
+        scanner.close();
         return s;
     }
 
     public static int getNRondasTorneio() {
-        StringBuilder sb = new StringBuilder("Insira o número de rondas do torneio: \n");
-        System.out.println(sb.toString());
+        System.out.println("Insira o número de rondas do torneio: ");
         Scanner scanner = new Scanner(System.in);
         int s = scanner.nextInt();
         scanner.close();
@@ -67,6 +66,7 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
+        scanner.close();
         return s;
     }
 
@@ -75,16 +75,17 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
+        scanner.close();
         return s;
     }
 
-    public static void showJogadores(String nome, Map<String, Jogador> jogadores) {
+    public static void showJogadores(String nome, Map<String,Jogador> jogadores) {
 
         StringBuilder sb = new StringBuilder("------- Jogadores com o nome " + nome + "-------\n");
 
         for(Map.Entry<String,Jogador> entry : jogadores.entrySet()) {
-            sb.append(entry.getKey()).append(": ");
-            sb.append(entry.getValue().toString()).append("\n");
+            sb.append(entry.getKey() + ": \n");
+            sb.append(entry.getValue().toString() + "\n");
         }
         System.out.println(sb.toString());
     }
@@ -109,6 +110,7 @@ public class View {
             case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
             case(2): sb.append("A equipa não existe.\n"); break;
             case(3): sb.append("A rando não é válida."); break;
+            case(4): sb.append("Número de rondas não válido para as equipas existentes."); break;
         }
         System.out.println(sb.toString());
     }
@@ -121,7 +123,9 @@ public class View {
         }
         sb.append("Jogador nr" + nrJog + " escolha a equipa com que pretende jogar:");
 
-        return scanner.nextInt();
+        int s = scanner.nextInt();
+        scanner.close();
+        return s;
     }
 
     public static int[] getSubstituicoes(Equipa equipa) throws NumeroSemJogadorException {
@@ -145,10 +149,14 @@ public class View {
         sb.append("Jogador a sair: \n(Se não pretende fazer mais alterações, insira -1)");
         System.out.println(sb.toString());
         int sair = scanner.nextInt();
-        if(sair == -1) return result;
+        if(sair == -1) {
+            scanner.close();
+            return result;
+        }
         result[0] = sair;
         System.out.println("Jogador a entrar: \n");
         int entrar = scanner.nextInt();
+        scanner.close();
         result[1] = entrar;
         return result;
     }
