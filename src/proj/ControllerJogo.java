@@ -24,8 +24,9 @@ public class ControllerJogo {
                     List<String> l = new ArrayList<>(equipas.keySet());
                     int key1 = View.escolheEquipa(l, 1);
                     l.remove(key1);
-                    int key2 = View.escolheEquipa(l, 2);
                     Equipa e1 = equipas.get(key1);
+                    equipas.remove(key1);
+                    int key2 = View.escolheEquipa(l, 2);
                     e1.fillTitulares();
                     Equipa e2 = equipas.get(key2);
                     e2.fillTitulares();
