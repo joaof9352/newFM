@@ -15,6 +15,7 @@ public class Estado {
     public Estado() {
         this.equipas = new HashMap<>();
         this.jogos = new ArrayList<>();
+
     }
 
     public Estado(Map<String, Equipa> newEquipas, List<Jogo> newJogos){
@@ -36,7 +37,7 @@ public class Estado {
 
     public void transferencia(int num, String equipaDe, String equipaPara) throws EquipaNaoExisteException, NumeroSemJogadorException {
         if(!equipas.containsKey(equipaDe) || !equipas.containsKey(equipaPara))
-            throw new EquipaNaoExisteException("A equipa não existe");
+            throw new EquipaNaoExisteException();
 
         equipas.get(equipaPara).insereJogador(equipas.get(equipaDe).jogadorVaiSair(num));
     }

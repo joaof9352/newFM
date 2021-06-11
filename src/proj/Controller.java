@@ -8,6 +8,7 @@ public class Controller {
 
     private static Estado e = new Estado();
 
+
     public static void start() throws Exception {
 
         String opcoes[] = {"Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Carregar ficheiro", "Salvar"};
@@ -19,6 +20,8 @@ public class Controller {
 
             switch(mainMenu.getOpcao()) {
                 case(1): // Simular um jogo
+                    ControllerJogo.start(e.getEquipas());
+                    break;
 
                 case(2): // Torneio
 

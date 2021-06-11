@@ -54,7 +54,6 @@ public class Menu {
             System.out.println("Opção Inválida!!!");
             op = -1;
         }
-        is.close();
         return op;
     }
     

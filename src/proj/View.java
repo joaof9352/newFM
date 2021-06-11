@@ -1,7 +1,10 @@
 package proj;
 import java.util.Scanner;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Collectors;
+import proj.Exception.NumeroSemJogadorException;
 
 
 public class View {
@@ -11,7 +14,6 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
         return s;
     }
 
@@ -28,7 +30,6 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
         return s;
     }
 
@@ -41,7 +42,6 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
         return s;
     }
 
@@ -50,7 +50,6 @@ public class View {
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
         return s;
     }
 
@@ -83,13 +82,51 @@ public class View {
         StringBuilder sb = new StringBuilder();
         switch(error) {
             case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
-            case(2): sb.append("A equipa não existe.\n");
+            case(2): sb.append("A equipa não existe.\n"); break;
         }
         System.out.println(sb.toString());
     }
 
-    public static void showJogo(Jogo jogo) {
-        
+    public static int escolheEquipa(List<String> equipas, int nrJog) {
+        StringBuilder sb = new StringBuilder();
+        Scanner scanner = new Scanner(System.in);
+        for(String s : equipas) {
+            sb.append(equipas.indexOf(s) + " - " + s + "\n");
+        }
+        sb.append("Jogador nr" + nrJog + " escolha a equipa com que pretende jogar:");
+
+        return scanner.nextInt();
     }
+
+    public static int[] getSubstituicoes(Equipa equipa) throws NumeroSemJogadorException {
+
+        List<Jogador> suplentes = new ArrayList<>(equipa.getJogadores());
+        suplentes.stream().filter(j -> !equipa.getTitulares().contains(j.getNumeroJogador())).collect(Collectors.toList());
+
+        int result[] = {-1,-1};
+
+        Scanner scanner = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder("---------- Intervalo ----------");
+        sb.append(equipa.getNome() + "\n");
+        sb.append("Titulares: \n");
+        for(int jog : equipa.getTitulares()) {
+            sb.append("   " + equipa.getJogadorByNum(jog).toString());
+        }
+        sb.append("Suplentes: \n");
+        for(Jogador jog : suplentes) {
+            sb.append("   " + jog.toString());
+        }
+        sb.append("Jogador a sair: \n(Se não pretende fazer mais alterações, insira -1)");
+        System.out.println(sb.toString());
+        int sair = scanner.nextInt();
+        if(sair == -1) return result;
+        result[0] = sair;
+        System.out.println("Jogador a entrar: \n");
+        int entrar = scanner.nextInt();
+        result[1] = entrar;
+        return result;
+    }
+
+
 }
 

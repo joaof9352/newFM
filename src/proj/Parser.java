@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class Parser {
 
-    public static void parse() throws LinhaIncorretaException {
-        List<String> linhas = lerFicheiro("output.txt");
-        Map<String, Equipa> equipas = new HashMap<>(); //nome, equipa
-        Map<Integer, Jogador> jogadores = new HashMap<>(); //numero, jogador
+    public static void parse(String file, Estado est) throws LinhaIncorretaException {
+        List<String> linhas = lerFicheiro(file);
+        Map<String, Equipa> equipas = new HashMap<>();
+        Map<Integer, Jogador> jogadores = new HashMap<>();
         List<Jogo> jogos = new ArrayList<>();
         Equipa ultima = null; Jogador j = null;
         String[] linhaPartida;

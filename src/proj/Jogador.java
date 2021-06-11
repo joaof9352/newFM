@@ -140,7 +140,7 @@ public abstract class Jogador {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(this.getNumeroJogador()).append(" | ").append(this.getNomeJogador()).append(" | ")
-                .append(this.calculaHabilidade());
+                .append(this.calculaHabilidade()).append("\n");
 
         return sb.toString();
     }
