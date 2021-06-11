@@ -48,8 +48,9 @@ public class Controller {
                 case(6): // Carregar ficheiro
                     //String file = View.getNomeFicheiro();
                     try{
-                       // Parser.parse("/home/cristiano/Desktop/Universidade/2º Ano/Programação Orientada a Objetos/newFM/src/proj/logs.txt", e);
-                        Parser.parse("C:\\Users\\joaof\\Desktop\\newFM\\out\\production\\newFM\\proj\\logs.txt", e);
+                        Parser.parse("/Users/joaolourenco/Universidade/2º Ano/2º Semestre/POO/newFM/src/proj/logs.txt", e);
+                        // Parser.parse("/home/cristiano/Desktop/Universidade/2º Ano/Programação Orientada a Objetos/newFM/src/proj/logs.txt", e);
+                        //Parser.parse("C:\\Users\\joaof\\Desktop\\newFM\\out\\production\\newFM\\proj\\logs.txt", e);
                         View.messages(1);
                     } catch(LinhaIncorretaException s) {
                         View.handler(1);

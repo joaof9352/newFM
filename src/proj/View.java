@@ -12,14 +12,11 @@ import proj.Model.Jogo;
 
 public class View {
 
-    public static void pressAnyKey() {
-        StringBuilder sb = new StringBuilder("Pressione qualquer tecla para continuar.");
+    public static String pressAnyKey() {
+        StringBuilder sb = new StringBuilder("Pressione qualquer tecla para continuar: \n");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
-        System.out.println("teste1");
-        scanner.next();
-        //scanner.close();
-        System.out.println("teste2");
+        return scanner.nextLine();
     }
 
     public static void showListaEquipas(List<String> equipas) {
@@ -112,7 +109,7 @@ public class View {
         switch(error) {
             case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
             case(2): sb.append("A equipa não existe.\n"); break;
-            case(3): sb.append("A rando não é válida."); break;
+            case(3): sb.append("A ronda não é válida."); break;
             case(4): sb.append("Número de rondas não válido para as equipas existentes."); break;
         }
         System.out.println(sb.toString());
@@ -125,9 +122,8 @@ public class View {
             sb.append(equipas.indexOf(s) + " - " + s + "\n");
         }
         sb.append("Jogador nr" + nrJog + " escolha a equipa com que pretende jogar:");
-
+        System.out.println(sb.toString());
         int s = scanner.nextInt();
-        //scanner.close();
         return s;
     }
 
@@ -153,13 +149,11 @@ public class View {
         System.out.println(sb.toString());
         int sair = scanner.nextInt();
         if(sair == -1) {
-            //scanner.close();
             return result;
         }
         result[0] = sair;
         System.out.println("Jogador a entrar: \n");
         int entrar = scanner.nextInt();
-        //scanner.close();
         result[1] = entrar;
         return result;
     }

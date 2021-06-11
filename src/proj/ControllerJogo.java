@@ -1,8 +1,5 @@
 package proj;
-import proj.Exception.JogadorNaoExisteException;
-import proj.Exception.NumeroSemJogadorException;
-import proj.Exception.PosicaoSemJogadoresException;
-import proj.Exception.SubstituicaoImpossivelException;
+import proj.Exception.*;
 import proj.Model.Equipa;
 import proj.Model.Jogo;
 
@@ -14,7 +11,7 @@ import java.util.Random;
 
 public class ControllerJogo {
 
-    public static void start(Map<String, Equipa> equipas) throws NumeroSemJogadorException, JogadorNaoExisteException, SubstituicaoImpossivelException, PosicaoSemJogadoresException {
+    public static void start(Map<String, Equipa> equipas) throws NumeroSemJogadorException, JogadorNaoExisteException, SubstituicaoImpossivelException, PosicaoSemJogadoresException, EquipaSemJogadoresException {
 
     String opcoes[] = {"Jogar 1 vs 1", "Jogar contra o PC"};
     Menu menuJogo = new Menu(opcoes);
@@ -29,7 +26,9 @@ public class ControllerJogo {
                     l.remove(key1);
                     int key2 = View.escolheEquipa(l, 2);
                     Equipa e1 = equipas.get(key1);
+                    e1.fillTitulares();
                     Equipa e2 = equipas.get(key2);
+                    e2.fillTitulares();
                     Jogo j = new Jogo(e1,e2, LocalDate.now());
                     int aux = 0;
                     int subs[] = {0,0};
@@ -55,7 +54,7 @@ public class ControllerJogo {
                     j.runMetadePermiteSubs();
                     //View.showMetadeJogo();
 
-                    //View.showResultadoFinal();
+                    System.out.println(j.getNomeCasa() + " " + j.getGolosCasa() + " - " + j.getGolosFora() + " " + j.getNomeFora() + "\n\n");
                     View.pressAnyKey();
                     break;
 
@@ -66,8 +65,9 @@ public class ControllerJogo {
                     l = new ArrayList<>(equipas.keySet());
                     key1 = View.escolheEquipa(l, 1);
                     l.remove(key1);
-                    key2 = random.nextInt(l.size());
                     e1 = equipas.get(key1);
+                    equipas.remove(key1);
+                    key2 = random.nextInt(l.size());
                     e2 = equipas.get(key2);
                     j = new Jogo(e1,e2, LocalDate.now());
                     aux = 0;
