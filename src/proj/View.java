@@ -36,6 +36,28 @@ public class View {
         return s;
     }
 
+    public static int getNRondasTorneio() {
+        StringBuilder sb = new StringBuilder("Insira o número de rondas do torneio: \n");
+        System.out.println(sb.toString());
+        Scanner scanner = new Scanner(System.in);
+        int s = scanner.nextInt();
+        scanner.close();
+        return s;
+    }
+
+    public static int getNRonda(){
+        StringBuilder sb = new StringBuilder("Insira a ronda que quer observar: \n");
+        System.out.println(sb.toString());
+        Scanner scanner = new Scanner(System.in);
+        int s = scanner.nextInt();
+        scanner.close();
+        return s;
+    }
+
+    public static void showRonda(String ronda){
+        System.out.println(ronda);
+    }
+
     public static void showEquipa(String jogadores) {
         System.out.println(jogadores);
     }
@@ -86,6 +108,7 @@ public class View {
         switch(error) {
             case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
             case(2): sb.append("A equipa não existe.\n"); break;
+            case(3): sb.append("A rando não é válida."); break;
         }
         System.out.println(sb.toString());
     }

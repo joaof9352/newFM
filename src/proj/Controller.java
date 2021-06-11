@@ -27,6 +27,8 @@ public class Controller {
                     break;
 
                 case(2): // Torneio
+                    ControllerTorneio.start(e.getEquipas());
+                    break;
 
                 case(3): // Consultar equipa
                     try{ControllerEquipa.start(e.getEquipas());}
