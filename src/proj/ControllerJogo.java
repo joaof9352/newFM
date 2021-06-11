@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class ControllerJogo {
 
-    public static void start(Map<String, Equipa> equipas) throws NumeroSemJogadorException, JogadorNaoExisteException, SubstituicaoImpossivelException, PosicaoSemJogadoresException, EquipaSemJogadoresException {
+    public static void start(Map<String, Equipa> equipas) throws NumeroSemJogadorException, JogadorNaoExisteException, SubstituicaoImpossivelException, PosicaoSemJogadoresException, EquipaSemJogadoresException, InterruptedException {
 
     String opcoes[] = {"Jogar 1 vs 1", "Jogar contra o PC"};
     Menu menuJogo = new Menu(opcoes);
@@ -35,7 +35,7 @@ public class ControllerJogo {
                     int subs[] = {0,0};
 
                     j.runMetadePermiteSubs();
-                    //View.showMetadeJogo();
+                    View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
                     subs = View.getSubstituicoes(e1);
                     if(subs[1] == -1) aux = -1;
@@ -53,7 +53,7 @@ public class ControllerJogo {
                     }
                 
                     j.runMetadePermiteSubs();
-                    //View.showMetadeJogo();
+                    View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
                     System.out.println(j.getNomeCasa() + " " + j.getGolosCasa() + " - " + j.getGolosFora() + " " + j.getNomeFora() + "\n\n");
                     View.pressAnyKey();

@@ -19,6 +19,12 @@ public class View {
         return scanner.nextLine();
     }
 
+    public static void clear() {
+        for (int i = 0; i < 200; i++) {
+            System.out.println("\n");
+        }
+    }
+
     public static void showListaEquipas(List<String> equipas) {
         StringBuilder sb = new StringBuilder("---------- Lista de Equipas ----------\n");
         for (String e: equipas){
@@ -158,6 +164,59 @@ public class View {
         return result;
     }
 
+    public static void showMetadeJogo(int parte, List<Integer> minutosGolosCasa,
+                                                 List<Integer> minutosGolosFora,
+                                                 List<Integer> minutosOportunidadesCasa,
+                                                 List<Integer> minutosOportunidadesFora,
+                                                 String casa, String fora) throws InterruptedException {
+        StringBuilder sb = new StringBuilder();
+        int init = 0;
+        int fim = 45;
+        int golosCasa = 0;
+        int golosFora = 0;
+        if(parte == 2) {
+            init = 46;
+            fim = 90;
+            golosCasa = (int) minutosGolosCasa.stream().filter(k -> k < 46).count();
+            golosFora = (int) minutosGolosFora.stream().filter(k -> k < 46).count();
+        }
 
+
+        for(int i = init; i < fim; i++) {
+            clear();
+            System.out.println("-----" + casa + " " + golosCasa + " vs " + golosFora + " " + fora + "\n\n");
+            sb.append("Minuto [" + i +  "] ");
+
+            if (minutosOportunidadesCasa.contains(i)) {
+                sb.append("Oportunidade para " + casa + "...");
+                Thread.sleep(1000);
+                System.out.println(sb.toString());
+                if (minutosGolosCasa.contains(i)) {
+                    System.out.println("GOLOOOO!!!");
+                    sb.append("GOLOOOO!!!\n");
+                    golosCasa++;
+                } else {
+                    System.out.println("Fora...");
+                    sb.append("Fora...\n");
+                }
+            }
+
+            if (minutosOportunidadesFora.contains(i)) {
+                sb.append("Oportunidade para " + fora + "...");
+                Thread.sleep(1000);
+                System.out.println(sb.toString());
+                if (minutosGolosFora.contains(i)) {
+                    System.out.println("GOLOOOO!!!");
+                    sb.append("GOLOOOO!!!\n");
+                    golosFora++;
+                } else {
+                    System.out.println("Fora...");
+                    sb.append("Fora...\n");
+                }
+            }
+            System.out.println(sb.toString());
+            Thread.sleep(500);
+        }
+    }
 }
 
