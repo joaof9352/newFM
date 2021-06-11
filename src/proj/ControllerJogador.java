@@ -1,5 +1,8 @@
 package proj;
 
+import proj.Model.Equipa;
+import proj.Model.Jogador;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -7,7 +10,7 @@ public class ControllerJogador {
 
     public static void start(Map<String, Equipa> equipas) {
 
-        Map<String,Jogador> result = new HashMap<>();
+        Map<String, Jogador> result = new HashMap<>();
         String nome = View.getNomeJogador();
 
         for(Map.Entry<String,Equipa> entry : equipas.entrySet()) {

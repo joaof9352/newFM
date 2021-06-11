@@ -1,6 +1,12 @@
 package proj;
+import proj.Exception.JogadorNaoExisteException;
+import proj.Exception.NumeroSemJogadorException;
+import proj.Exception.PosicaoSemJogadoresException;
+import proj.Exception.SubstituicaoImpossivelException;
+import proj.Model.Equipa;
+import proj.Model.Jogo;
+
 import java.util.Map;
-import javax.lang.model.util.ElementScanner14;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -8,7 +14,7 @@ import java.util.Random;
 
 public class ControllerJogo {
 
-    public static void start(Map<String, Equipa> equipas) {
+    public static void start(Map<String, Equipa> equipas) throws NumeroSemJogadorException, JogadorNaoExisteException, SubstituicaoImpossivelException, PosicaoSemJogadoresException {
 
     String opcoes[] = {"Jogar 1 vs 1", "Jogar contra o PC"};
     Menu menuJogo = new Menu(opcoes);
@@ -29,7 +35,7 @@ public class ControllerJogo {
                     int subs[] = {0,0};
 
                     j.runMetadePermiteSubs();
-                    View.showMetadeJogo();
+                    //View.showMetadeJogo();
 
                     subs = View.getSubstituicoes(e1);
                     if(subs[1] == -1) aux = -1;
@@ -47,9 +53,9 @@ public class ControllerJogo {
                     }
                 
                     j.runMetadePermiteSubs();
-                    View.showMetadeJogo();
+                    //View.showMetadeJogo();
 
-                    View.showResultadoFinal();
+                    //View.showResultadoFinal();
                     View.pressAnyKey();
                     break;
 
@@ -65,10 +71,10 @@ public class ControllerJogo {
                     e2 = equipas.get(key2);
                     j = new Jogo(e1,e2, LocalDate.now());
                     aux = 0;
-                    subs[0] = subs[1] = 0;
+                    //subs[0] = subs[1] = 0;
 
                     j.runMetadePermiteSubs();
-                    View.showMetadeJogo();
+                    //View.showMetadeJogo();
 
                     subs = View.getSubstituicoes(e1);
                     if(subs[0] == -1) aux = -1;
@@ -78,9 +84,9 @@ public class ControllerJogo {
                     }
                 
                     j.runMetadePermiteSubs();
-                    View.showMetadeJogo();
+                    //View.showMetadeJogo();
 
-                    View.showResultadoFinal();
+                    //View.showResultadoFinal();
                     View.pressAnyKey();
                     break;
 

@@ -1,4 +1,6 @@
-package proj;
+package proj.Model;
+
+import proj.Model.Equipa;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

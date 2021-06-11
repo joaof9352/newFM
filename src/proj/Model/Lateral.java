@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 public class Lateral extends Jogador{
 

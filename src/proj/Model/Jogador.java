@@ -1,4 +1,4 @@
-package proj;
+package proj.Model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
