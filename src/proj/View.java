@@ -148,7 +148,7 @@ public class View {
         int result[] = {-1,-1};
 
         Scanner scanner = new Scanner(System.in);
-        StringBuilder sEquipa = new StringBuilder("---------- Intervalo ----------\n");
+        StringBuilder sEquipa = new StringBuilder();
         sEquipa.append(equipa.getNome() + "\n");
         sEquipa.append("Titulares: \n");
         for(int jog : equipa.getTitulares()) {
