@@ -2,8 +2,8 @@ package proj.Model;
 import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.NumeroSemJogadorException;
 
+import java.io.*;
 import java.util.List;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -49,6 +49,19 @@ public class Estado implements Serializable{
             throw new EquipaNaoExisteException();
 
         equipas.get(equipaPara).insereJogador(equipas.get(equipaDe).jogadorVaiSair(num));
+    }
+
+    public void wrBinary(String filepath) throws IOException{
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filepath));
+        out.writeObject(this);
+        out.close();
+    }
+
+    public static Estado rdBinary(String filepath) throws IOException, ClassNotFoundException{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(filepath));
+        Estado e = (Estado) in.readObject();
+        in.close();
+        return e;
     }
 
 }
