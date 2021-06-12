@@ -190,7 +190,7 @@ public class View {
                     result[1] = entrar;
                     repetir = false;
                 }
-                if(equipa.getJogadorByNum(entrar).getClass().toString().equals(equipa.getJogadorByNum(sair).getClass().toString())) {
+                if(!equipa.getJogadorByNum(entrar).getClass().toString().equals(equipa.getJogadorByNum(sair).getClass().toString())) {
                     handler(7, "");
                     pressAnyKey();
                     repetir = true;
