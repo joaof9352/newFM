@@ -244,7 +244,10 @@ public class View {
                     Thread.sleep(750);
                 }
             }
-            Thread.sleep(350);
+            Thread.sleep(300);
+        }
+        if(parte == 2) {
+            System.out.println(casa + " " + golosCasa + " - " + golosFora + " " + fora + "\n\n");
         }
     }
 }
