@@ -30,52 +30,58 @@ public class ControllerJogo {
                     Equipa e2 = equipas.get(l.get(key2));
                     equipas.remove(l.get(key2));
                     l.remove(key2);
+                    boolean skip = true;
 
-                    e1.fillTitulares();
-                    e2.fillTitulares();
-                    Jogo j = new Jogo(e1,e2, LocalDate.now());
-                    int aux = 0;
-                    int subs[] = {0,0};
+                    try {e1.fillTitulares();}
+                    catch(EquipaSemJogadoresException s) {View.handler(8,e1.getNome()); skip = false;}
+                    try {e2.fillTitulares();}
+                    catch(EquipaSemJogadoresException s) {View.handler(8,e2.getNome()); skip = false;}
 
-                    subs = View.getSubstituicoes(j.getEquipaCasa());
-                    if(subs[1] == -1) aux = -1;
-                    while(aux != -1) {
-                        j.substituicao(0, subs[0], subs[1]);
+                    if (skip){
+                        Jogo j = new Jogo(e1, e2, LocalDate.now());
+                        int aux = 0;
+                        int subs[] = {0, 0};
+
                         subs = View.getSubstituicoes(j.getEquipaCasa());
-                        if(subs[1] == -1) aux = -1;
-                    }
+                        if (subs[1] == -1) aux = -1;
+                        while (aux != -1) {
+                            j.substituicao(0, subs[0], subs[1]);
+                            subs = View.getSubstituicoes(j.getEquipaCasa());
+                            if (subs[1] == -1) aux = -1;
+                        }
 
-                    aux = 0;
-                    subs = View.getSubstituicoes(j.getEquipaFora());
-                    if(subs[1] == -1) aux = -1;
-                    while(aux != -1) {
-                        j.substituicao(0, subs[0], subs[1]);
+                        aux = 0;
                         subs = View.getSubstituicoes(j.getEquipaFora());
-                        if(subs[1] == -1) aux = -1;
-                    }
+                        if (subs[1] == -1) aux = -1;
+                        while (aux != -1) {
+                            j.substituicao(0, subs[0], subs[1]);
+                            subs = View.getSubstituicoes(j.getEquipaFora());
+                            if (subs[1] == -1) aux = -1;
+                        }
 
-                    j.runMetadePermiteSubs();
-                    View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                        j.runMetadePermiteSubs();
+                        View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(), j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
-                    subs = View.getSubstituicoes(j.getEquipaCasa());
-                    if(subs[1] == -1) aux = -1;
-                    for(int i = 0; i < 2 && aux != -1; i++) {
-                        j.substituicao(0, subs[0], subs[1]);
                         subs = View.getSubstituicoes(j.getEquipaCasa());
-                        if(subs[1] == -1) aux = -1;
-                    }
+                        if (subs[1] == -1) aux = -1;
+                        for (int i = 0; i < 2 && aux != -1; i++) {
+                            j.substituicao(0, subs[0], subs[1]);
+                            subs = View.getSubstituicoes(j.getEquipaCasa());
+                            if (subs[1] == -1) aux = -1;
+                        }
 
-                    aux = 0;
-                    subs = View.getSubstituicoes(j.getEquipaFora());
-                    if(subs[0] == -1) aux = -1;
-                    for(int i = 0; i < 2 && aux != -1; i++) {
-                        j.substituicao(1, subs[0], subs[1]);
+                        aux = 0;
                         subs = View.getSubstituicoes(j.getEquipaFora());
-                        if(subs[1] == -1) aux = -1;
+                        if (subs[0] == -1) aux = -1;
+                        for (int i = 0; i < 2 && aux != -1; i++) {
+                            j.substituicao(1, subs[0], subs[1]);
+                            subs = View.getSubstituicoes(j.getEquipaFora());
+                            if (subs[1] == -1) aux = -1;
+                        }
+
+                        j.runMetadePermiteSubs();
+                        View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(), j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
                     }
-                
-                    j.runMetadePermiteSubs();
-                    View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
                     View.pressAnyKey();
                     break;
@@ -93,36 +99,41 @@ public class ControllerJogo {
                     e2 = equipas.get(l.get(key2));
                     equipas.remove(l.get(key2));
                     l.remove(key2);
+                    skip = true;
 
-                    e1.fillTitulares();
-                    e2.fillTitulares();
-                    j = new Jogo(e1,e2, LocalDate.now());
-                    aux = 0;
-                    int subs2[] = {0,0};
+                    try {e1.fillTitulares();}
+                    catch(EquipaSemJogadoresException s) {View.handler(8,e1.getNome()); skip = false;}
+                    try {e2.fillTitulares();}
+                    catch(EquipaSemJogadoresException s) {View.handler(8,e2.getNome()); skip = false;}
+
+                    if (skip) {
+                        Jogo j2 = new Jogo(e1, e2, LocalDate.now());
+                        int aux2 = 0;
+                        int subs2[] = {0, 0};
 
 
-                    subs2 = View.getSubstituicoes(j.getEquipaCasa());
-                    if(subs2[1] == -1) aux = -1;
-                    while(aux != -1) {
-                        j.substituicao(0, subs2[0], subs2[1]);
-                        subs2 = View.getSubstituicoes(j.getEquipaCasa());
-                        if(subs2[1] == -1) aux = -1;
+                        subs2 = View.getSubstituicoes(j2.getEquipaCasa());
+                        if (subs2[1] == -1) aux2 = -1;
+                        while (aux2 != -1) {
+                            j2.substituicao(0, subs2[0], subs2[1]);
+                            subs2 = View.getSubstituicoes(j2.getEquipaCasa());
+                            if (subs2[1] == -1) aux2 = -1;
+                        }
+
+                        j2.runMetadePermiteSubs();
+                        View.showMetadeJogo(1, j2.getMinutosGolosCasa(), j2.getMinutosGolosCasa(), j2.getMinutosOportunidadesCasa(), j2.getMinutosOportunidadesFora(), j2.getNomeCasa(), j2.getNomeFora());
+
+                        subs2 = View.getSubstituicoes(j2.getEquipaCasa());
+                        if (subs2[1] == -1) aux2 = -1;
+                        for (int i = 0; i < 2 && aux2 != -1; i++) {
+                            j2.substituicao(0, subs2[0], subs2[1]);
+                            subs2 = View.getSubstituicoes(j2.getEquipaCasa());
+                            if (subs2[1] == -1) aux2 = -1;
+                        }
+
+                        j2.runMetadePermiteSubs();
+                        View.showMetadeJogo(2, j2.getMinutosGolosCasa(), j2.getMinutosGolosCasa(), j2.getMinutosOportunidadesCasa(), j2.getMinutosOportunidadesFora(), j2.getNomeCasa(), j2.getNomeFora());
                     }
-
-                    j.runMetadePermiteSubs();
-                    View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
-
-                    subs2 = View.getSubstituicoes(j.getEquipaCasa());
-                    if(subs2[1] == -1) aux = -1;
-                    for(int i = 0; i < 2 && aux != -1; i++) {
-                        j.substituicao(0, subs2[0], subs2[1]);
-                        subs2 = View.getSubstituicoes(j.getEquipaCasa());
-                        if(subs2[1] == -1) aux = -1;
-                    }
-
-                    j.runMetadePermiteSubs();
-                    View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
-
                     View.pressAnyKey();
                     break;
 

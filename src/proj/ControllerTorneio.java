@@ -78,7 +78,7 @@ public class ControllerTorneio {
                         Torneio tA = new Torneio(equipas, nRondasA);
                         menuTorneio(tA);
                         sair = false;
-                    } catch (EquipasInsuficientesException e) {View.handler(4);}
+                    } catch (EquipasInsuficientesException e) {View.handler(4,"");}
                     break;
 
                 case(0): //Sair
@@ -159,7 +159,7 @@ public class ControllerTorneio {
                         String rRonda = t.resultadosRondaToString(t.getRonda());
                         View.showRonda(rRonda);
                         View.pressAnyKey();
-                    } catch (RondaNaoValidaException r) {View.handler(3);}
+                    } catch (RondaNaoValidaException r) {View.handler(3,"");}
 
                     if(t.getChave().get(t.getRonda() - 1).size() == 1){
                         sair = false;
@@ -180,12 +180,12 @@ public class ControllerTorneio {
                         String rRonda = t.resultadosRondaToString(ronda);
                         View.showRonda(rRonda);
                         View.pressAnyKey();
-                    } catch (RondaNaoValidaException r) {View.handler(3);}
+                    } catch (RondaNaoValidaException r) {View.handler(3,"");}
                     break;
                 
                 case(4): // Consultar as equipas do torneio
                     try{ControllerEquipa.start(t.getEquipas());}
-                    catch(EquipaNaoExisteException s) {View.handler(2);}
+                    catch(EquipaNaoExisteException s) {View.handler(2,"");}
                     break;
                 
                 case(5): // Salvar torneio

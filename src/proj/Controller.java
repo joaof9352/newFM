@@ -32,7 +32,7 @@ public class Controller {
 
                 case(3): // Consultar equipa
                     try{ControllerEquipa.start(e.getEquipas());}
-                    catch(EquipaNaoExisteException s) {View.handler(2);}
+                    catch(EquipaNaoExisteException s) {View.handler(2,"");}
                     break;
                 
                 case(4): // Consultar jogador por nome
@@ -53,7 +53,7 @@ public class Controller {
                         //Parser.parse("C:\\Users\\joaof\\Desktop\\newFM\\out\\production\\newFM\\proj\\logs.txt", e);
                         View.messages(1);
                     } catch(LinhaIncorretaException s) {
-                        View.handler(1);
+                        View.handler(1,"");
                     }
                     View.pressAnyKey();
                     break;

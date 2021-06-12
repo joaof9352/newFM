@@ -113,7 +113,7 @@ public class View {
         System.out.println(sb.toString());
     }
 
-    public static void handler(int error) {
+    public static void handler(int error, String s) {
         StringBuilder sb = new StringBuilder();
         switch(error) {
             case(1): sb.append("Ficheiro com linha incorreta.\n"); break;
@@ -123,6 +123,7 @@ public class View {
             case(5): sb.append("O jogador titular com esse número não existe."); break;
             case(6): sb.append("O jogador suplente com esse número não existe."); break;
             case(7): sb.append("Para subsituir 2 jogadores, estes devem ser da mesma posição."); break;
+            case(8): sb.append("A equipa " + s + " não tem jogadores suficientes em todas as posições para jogar."); break;
         }
         System.out.println(sb.toString());
     }
@@ -171,7 +172,7 @@ public class View {
             }
             while (!equipa.getTitulares().contains(sair)) {
                 System.out.println(sEquipa.toString());
-                handler(5);
+                handler(5,"");
                 messages(2);
                 sair = scanner.nextInt();
             }
@@ -181,7 +182,7 @@ public class View {
             if (entrar != -1) {
                 while (!suplentesNr.contains(entrar) && entrar != -1) {
                     System.out.println(sEquipa.toString());
-                    handler(6);
+                    handler(6, "");
                     messages(3);
                     entrar = scanner.nextInt();
                 }
@@ -190,7 +191,7 @@ public class View {
                     repetir = false;
                 }
                 if(equipa.getJogadorByNum(entrar).getClass().toString().equals(equipa.getJogadorByNum(sair).getClass().toString())) {
-                    handler(7);
+                    handler(7, "");
                     pressAnyKey();
                     repetir = true;
                 }
@@ -204,6 +205,11 @@ public class View {
                                                  List<Integer> minutosOportunidadesCasa,
                                                  List<Integer> minutosOportunidadesFora,
                                                  String casa, String fora) throws InterruptedException {
+
+        minutosGolosCasa.stream().forEach(System.out::println);
+        pressAnyKey();
+        minutosGolosFora.stream().forEach(System.out::println);
+        pressAnyKey();
 
         int init = 0;
         int fim = 45;
