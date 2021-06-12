@@ -3,6 +3,7 @@ package proj.Model;
 import proj.Exception.EquipaSemJogadoresException;
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
+import proj.View;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class Equipa {
 
     public double calculaHabilidade (Class<?> posicao) throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         List<Jogador> titularesJog = new ArrayList<>();
-        for(Integer i : titulares) {
+        for(int i : this.titulares) {
                 titularesJog.add(getJogadorByNum(i));
         }
         OptionalDouble db = titularesJog.stream().filter(posicao::isInstance).mapToDouble(Jogador::calculaHabilidade).average();
@@ -39,11 +40,13 @@ public class Equipa {
     public Equipa(String nomeE) {
         nome=nomeE;
         jogadores = new ArrayList<>();
+        this.titulares = new ArrayList<>();
     }
 
     public Equipa(Equipa e){
         this.nome = e.getNome();
         this.setJogadores(e.getJogadores());
+        this.titulares = e.getTitulares();
     }
 
     public static Equipa parse(String input){
@@ -79,7 +82,7 @@ public class Equipa {
     public List<Jogador> getJogadoresPosicao(Class<?> posicao, int n) throws EquipaSemJogadoresException {
         List<Jogador> p;
         try{
-            p = this.jogadores.stream().filter(posicao::isInstance).map(Jogador::clone).collect(Collectors.toList()).subList(0,n-1);
+            p = this.jogadores.stream().filter(posicao::isInstance).map(Jogador::clone).collect(Collectors.toList()).subList(0,n);
         }catch(IndexOutOfBoundsException e){
             throw new EquipaSemJogadoresException(posicao.toString());
         }
@@ -118,6 +121,11 @@ public class Equipa {
         addTitular(zag);
         addTitular(med);
         addTitular(ava);
+    }
+
+    public void subsitui(int sai, int entra) {
+        this.titulares.add(this.titulares.indexOf(sai),entra);
+        this.titulares.remove((Object) sai);
     }
 
     public Jogador jogadorVaiSair(int num) throws NumeroSemJogadorException {

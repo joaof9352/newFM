@@ -70,16 +70,7 @@ public class Parser {
         }
 
         est.setEquipas(equipas);
-        est.setJogos(jogos);//debug
-
-        for (Equipa e: equipas.values()){
-            System.out.println(e.toString());
-        }
-        for (Jogo jog: jogos){
-            System.out.println(jog.toString());
-        }
-
-
+        est.setJogos(jogos);
     }
 
     public static List<String> lerFicheiro(String nomeFich) {

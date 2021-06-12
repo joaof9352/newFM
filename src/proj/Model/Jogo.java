@@ -39,6 +39,10 @@ public class Jogo {
         golosCasa = 0;
         golosFora = 0;
         date = data;
+        equipaCasa = e1.clone();
+        equipaFora = e2.clone();
+        nomeCasa = e1.getNome();
+        nomeFora = e2.getNome();
         jogCasa = new ArrayList<>(e1.getTitulares());
         jogFora = new ArrayList<>(e2.getTitulares());
         poderCasa = new ArrayList<>(5);
@@ -201,26 +205,28 @@ public class Jogo {
             throw new JogadorNaoExisteException("O jogador nmr " + nmrSair + " não existe!");
 
         if(equipa == 0){
+            this.equipaCasa.subsitui(nmrSair, nmrEntrar);
             this.jogCasa.set(this.jogCasa.indexOf(nmrSair),nmrEntrar);
             substituicoesCasa.put(nmrSair,nmrEntrar);
         }else{
+            this.equipaFora.subsitui(nmrSair, nmrEntrar);
             this.jogFora.set(this.jogFora.indexOf(nmrSair),nmrEntrar);
             substituicoesFora.put(nmrSair,nmrEntrar);
         }
     }
 
     public void calculaPoder() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
-        poderCasa.set(0, equipaCasa.calculaHabilidade(GuardaRedes.class));
-        poderCasa.set(1, equipaCasa.calculaHabilidade(Lateral.class));
-        poderCasa.set(2, equipaCasa.calculaHabilidade(Defesa.class));
-        poderCasa.set(3, equipaCasa.calculaHabilidade(Medio.class));
-        poderCasa.set(4, equipaCasa.calculaHabilidade(Avancado.class));
+        poderCasa.add(0,equipaCasa.calculaHabilidade(GuardaRedes.class));
+        poderCasa.add(1, equipaCasa.calculaHabilidade(Lateral.class));
+        poderCasa.add(2, equipaCasa.calculaHabilidade(Defesa.class));
+        poderCasa.add(3, equipaCasa.calculaHabilidade(Medio.class));
+        poderCasa.add(4, equipaCasa.calculaHabilidade(Avancado.class));
 
-        poderFora.set(0, equipaFora.calculaHabilidade(GuardaRedes.class));
-        poderFora.set(1, equipaFora.calculaHabilidade(Lateral.class));
-        poderFora.set(2, equipaFora.calculaHabilidade(Defesa.class));
-        poderFora.set(3, equipaFora.calculaHabilidade(Medio.class));
-        poderFora.set(4, equipaFora.calculaHabilidade(Avancado.class));
+        poderFora.add(0, equipaFora.calculaHabilidade(GuardaRedes.class));
+        poderFora.add(1, equipaFora.calculaHabilidade(Lateral.class));
+        poderFora.add(2, equipaFora.calculaHabilidade(Defesa.class));
+        poderFora.add(3, equipaFora.calculaHabilidade(Medio.class));
+        poderFora.add(4, equipaFora.calculaHabilidade(Avancado.class));
     }
 
     public Equipa getEquipaCasa() {

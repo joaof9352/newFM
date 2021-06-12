@@ -139,7 +139,13 @@ public abstract class Jogador {
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getNumeroJogador()).append(" | ").append(this.getNomeJogador()).append(" | ")
+        String pos = "";
+        if(this.getClass().toString().equals("class proj.Model.GuardaRedes")) pos = "[GR] ";
+        if(this.getClass().toString().equals("class proj.Model.Defesa")) pos = "[DEF] ";
+        if(this.getClass().toString().equals("class proj.Model.Lateral")) pos = "[LAT] ";
+        if(this.getClass().toString().equals("class proj.Model.Medio")) pos = "[MED] ";
+        if(this.getClass().toString().equals("class proj.Model.Avancado")) pos = "[AVA] ";
+        sb.append(pos + this.getNumeroJogador()).append(" | ").append(this.getNomeJogador()).append(" | ")
                 .append(this.calculaHabilidade()).append("\n");
 
         return sb.toString();

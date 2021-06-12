@@ -13,15 +13,15 @@ import proj.Model.Jogo;
 public class View {
 
     public static String pressAnyKey() {
-        StringBuilder sb = new StringBuilder("Pressione qualquer tecla para continuar: \n");
+        StringBuilder sb = new StringBuilder("Pressione Enter para continuar:");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
     public static void clear() {
-        for (int i = 0; i < 200; i++) {
-            System.out.println("\n");
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
         }
     }
 
@@ -105,7 +105,9 @@ public class View {
     public static void messages(int message) {
         StringBuilder sb = new StringBuilder();
         switch(message) {
-            case(1): sb.append("Ficheiro lido com sucesso.\n"); break;
+            case(1): sb.append("Ficheiro lido com sucesso."); break;
+            case(2): sb.append("Se não pretende fazer mais alterações, insira -1. Jogador a sair: "); break;
+            case(3): sb.append("Se pretende cancelar a substituição, insira -1. Jogador a entrar: "); break;
         }
         System.out.println(sb.toString());
     }
@@ -117,6 +119,9 @@ public class View {
             case(2): sb.append("A equipa não existe.\n"); break;
             case(3): sb.append("A ronda não é válida."); break;
             case(4): sb.append("Número de rondas não válido para as equipas existentes."); break;
+            case(5): sb.append("O jogador titular com esse número não existe."); break;
+            case(6): sb.append("O jogador suplente com esse número não existe."); break;
+            case(7): sb.append("Para subsituir 2 jogadores, estes devem ser da mesma posição."); break;
         }
         System.out.println(sb.toString());
     }
@@ -136,31 +141,60 @@ public class View {
     public static int[] getSubstituicoes(Equipa equipa) throws NumeroSemJogadorException {
 
         List<Jogador> suplentes = new ArrayList<>(equipa.getJogadores());
-        suplentes.stream().filter(j -> !equipa.getTitulares().contains(j.getNumeroJogador())).collect(Collectors.toList());
+        List<Integer> suplentesNr = new ArrayList<>();
+        suplentes = suplentes.stream().filter(j -> !equipa.getTitulares().contains(j.getNumeroJogador())).collect(Collectors.toList());
+        suplentesNr = suplentes.stream().map(Jogador::getNumeroJogador).collect(Collectors.toList());
 
         int result[] = {-1,-1};
 
         Scanner scanner = new Scanner(System.in);
-        StringBuilder sb = new StringBuilder("---------- Intervalo ----------");
-        sb.append(equipa.getNome() + "\n");
-        sb.append("Titulares: \n");
+        StringBuilder sEquipa = new StringBuilder("---------- Intervalo ----------\n");
+        sEquipa.append(equipa.getNome() + "\n");
+        sEquipa.append("Titulares: \n");
         for(int jog : equipa.getTitulares()) {
-            sb.append("   " + equipa.getJogadorByNum(jog).toString());
+            sEquipa.append("   " + equipa.getJogadorByNum(jog).toString());
         }
-        sb.append("Suplentes: \n");
+        sEquipa.append("Suplentes: \n");
         for(Jogador jog : suplentes) {
-            sb.append("   " + jog.toString());
+            sEquipa.append("   " + jog.toString());
         }
-        sb.append("Jogador a sair: \n(Se não pretende fazer mais alterações, insira -1)");
-        System.out.println(sb.toString());
-        int sair = scanner.nextInt();
-        if(sair == -1) {
-            return result;
+        int sair;
+        int entrar;
+        boolean repetir = true;
+        while (repetir) {
+            System.out.println(sEquipa.toString());
+            messages(2);
+            sair = scanner.nextInt();
+            if (sair == -1) {
+                return result;
+            }
+            while (!equipa.getTitulares().contains(sair)) {
+                System.out.println(sEquipa.toString());
+                handler(5);
+                messages(2);
+                sair = scanner.nextInt();
+            }
+            result[0] = sair;
+            messages(3);
+            entrar = scanner.nextInt();
+            if (entrar != -1) {
+                while (!suplentesNr.contains(entrar) && entrar != -1) {
+                    System.out.println(sEquipa.toString());
+                    handler(6);
+                    messages(3);
+                    entrar = scanner.nextInt();
+                }
+                if(entrar != -1) {
+                    result[1] = entrar;
+                    repetir = false;
+                }
+                if(equipa.getJogadorByNum(entrar).getClass().toString().equals(equipa.getJogadorByNum(sair).getClass().toString())) {
+                    handler(7);
+                    pressAnyKey();
+                    repetir = true;
+                }
+            }
         }
-        result[0] = sair;
-        System.out.println("Jogador a entrar: \n");
-        int entrar = scanner.nextInt();
-        result[1] = entrar;
         return result;
     }
 
@@ -169,7 +203,7 @@ public class View {
                                                  List<Integer> minutosOportunidadesCasa,
                                                  List<Integer> minutosOportunidadesFora,
                                                  String casa, String fora) throws InterruptedException {
-        StringBuilder sb = new StringBuilder();
+
         int init = 0;
         int fim = 45;
         int golosCasa = 0;
@@ -181,41 +215,35 @@ public class View {
             golosFora = (int) minutosGolosFora.stream().filter(k -> k < 46).count();
         }
 
-
         for(int i = init; i < fim; i++) {
             clear();
-            System.out.println("-----" + casa + " " + golosCasa + " vs " + golosFora + " " + fora + "\n\n");
-            sb.append("Minuto [" + i +  "] ");
+            System.out.println("[" + casa + "] " + golosCasa + " vs " + golosFora + " [" + fora + "]\n");
+            System.out.print("Minuto [" + i +  "] ");
 
             if (minutosOportunidadesCasa.contains(i)) {
-                sb.append("Oportunidade para " + casa + "...");
-                Thread.sleep(1000);
-                System.out.println(sb.toString());
+                System.out.print("Oportunidade para " + casa + "...   ");
+                Thread.sleep(1500);
                 if (minutosGolosCasa.contains(i)) {
-                    System.out.println("GOLOOOO!!!");
-                    sb.append("GOLOOOO!!!\n");
+                    System.out.print("GOLOOOO!!!");
                     golosCasa++;
+                    Thread.sleep(750);
                 } else {
-                    System.out.println("Fora...");
-                    sb.append("Fora...\n");
+                    System.out.print("Fora...");
+                    Thread.sleep(750);
                 }
-            }
-
-            if (minutosOportunidadesFora.contains(i)) {
-                sb.append("Oportunidade para " + fora + "...");
-                Thread.sleep(1000);
-                System.out.println(sb.toString());
+            } else if (minutosOportunidadesFora.contains(i)) {
+                System.out.print("Oportunidade para " + fora + "...   ");
+                Thread.sleep(1500);
                 if (minutosGolosFora.contains(i)) {
-                    System.out.println("GOLOOOO!!!");
-                    sb.append("GOLOOOO!!!\n");
+                    System.out.print("GOLOOOO!!!");
                     golosFora++;
+                    Thread.sleep(750);
                 } else {
-                    System.out.println("Fora...");
-                    sb.append("Fora...\n");
+                    System.out.print("Fora...");
+                    Thread.sleep(750);
                 }
             }
-            System.out.println(sb.toString());
-            Thread.sleep(500);
+            Thread.sleep(350);
         }
     }
 }
