@@ -127,6 +127,9 @@ public class View {
             case(6): sb.append("O jogador suplente com esse número não existe."); break;
             case(7): sb.append("Para subsituir 2 jogadores, estes devem ser da mesma posição."); break;
             case(8): sb.append("A equipa " + s + " não tem jogadores suficientes em todas as posições para jogar."); break;
+            case(9): sb.append("Não foi possivel gravar o ficheiro com o path fornecido."); break;
+            case(10): sb.append("Não foi possivel carregar o ficheiro com o path fornecido."); break;
+
         }
         System.out.println(sb.toString());
     }
