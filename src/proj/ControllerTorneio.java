@@ -33,7 +33,7 @@ public class ControllerTorneio {
                     break;
 
                 case(2): // Carregar torneio
-                    String fileName= "Test.txt";
+                    String fileName = View.getNomeFicheiro();
                     FileInputStream fin = new FileInputStream(fileName);
                     ObjectInputStream ois = new ObjectInputStream(fin);
                     Torneio t= (Torneio) ois.readObject();
@@ -189,7 +189,7 @@ public class ControllerTorneio {
                     break;
                 
                 case(5): // Salvar torneio
-                    String fileName= "Test.txt";
+                    String fileName = View.getNomeFicheiro();
                     FileOutputStream fos = new FileOutputStream(fileName);
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
                     oos.writeObject(t);
