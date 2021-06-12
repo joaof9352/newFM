@@ -55,7 +55,12 @@ public class Equipa implements Serializable{
     }
 
     public void insereJogador(Jogador j) {
-        jogadores.add(j.clone());
+        Jogador k = j.clone();
+        Random r = new Random();
+        while(jogadores.stream().map(Jogador::getNumeroJogador).anyMatch(x -> x == k.getNumeroJogador())){
+            k.setNumeroJogador(r.nextInt());
+        }
+        jogadores.add(k);
     }
 
     public Jogador getJogadorByNum(int num) throws NumeroSemJogadorException {
