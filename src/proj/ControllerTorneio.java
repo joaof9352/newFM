@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import proj.Exception.EquipaNaoExisteException;
+import proj.Exception.EquipaSemJogadoresException;
 import proj.Exception.EquipasInsuficientesException;
 import proj.Exception.RondaNaoValidaException;
 import proj.Model.Equipa;
@@ -89,7 +90,7 @@ public class ControllerTorneio {
     }
     //verificar se os throws estão bem
 
-    public static void menuTorneio(Torneio t) throws Exception{ //ver como fazer quando for o ultimo jogo do torneio
+    public static void menuTorneio(Torneio t) throws Exception, EquipaSemJogadoresException{ //ver como fazer quando for o ultimo jogo do torneio
         String opcoes[] = {"Jogar próxima ronda", "Ver jogos da próxima ronda", "Ver resultados de uma ronda", "Consultar as equipas do torneio", "Salvar torneio"};
         Menu torneioMenu = new Menu(opcoes);
         boolean sair = true;
@@ -105,67 +106,72 @@ public class ControllerTorneio {
                     if(participa){
                         Equipa e1 = t.getEquipas().get(t.getChave().get(t.getRonda()).get(0)[0]);
                         Equipa e2 = t.getEquipas().get(t.getChave().get(t.getRonda()).get(0)[1]);
+                        boolean skip = true;
 
-                        e1.fillTitulares();
-                        e2.fillTitulares();
-                        Jogo j = new Jogo(e1,e2, LocalDate.now());
-            
-                        while(j.getGolosCasa() == j.getGolosFora()){
-                            int aux = 0;
-                            int subs[] = {0,0};
+                        try {e1.fillTitulares();}
+                        catch(EquipaSemJogadoresException s) {View.handler(8,e1.getNome()); skip = false; sair = false;}
+                        try {e2.fillTitulares();}
+                        catch(EquipaSemJogadoresException s) {View.handler(8,e2.getNome()); skip = false; sair = false;}
+                        
+                        if(skip){
+                            Jogo j = new Jogo(e1,e2, LocalDate.now());
+                            
+                            while(j.getGolosCasa() == j.getGolosFora()){
+                                int aux = 0;
+                                int subs[] = {0,0};
 
-                            subs = View.getSubstituicoes(j.getEquipaCasa());
-                            if(subs[1] == -1) aux = -1;
-                            while(aux != -1) {
-                                j.substituicao(0, subs[0], subs[1]);
                                 subs = View.getSubstituicoes(j.getEquipaCasa());
                                 if(subs[1] == -1) aux = -1;
-                            }
+                                while(aux != -1) {
+                                    j.substituicao(0, subs[0], subs[1]);
+                                    subs = View.getSubstituicoes(j.getEquipaCasa());
+                                    if(subs[1] == -1) aux = -1;
+                                }
 
-                            j.runMetadePermiteSubs();
-                            View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                                j.runMetadePermiteSubs();
+                                View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
-                            subs = View.getSubstituicoes(j.getEquipaCasa());
-                            if(subs[1] == -1) aux = -1;
-                            for(int i = 0; i < 2 && aux != -1; i++) {
-                                j.substituicao(0, subs[0], subs[1]);
                                 subs = View.getSubstituicoes(j.getEquipaCasa());
                                 if(subs[1] == -1) aux = -1;
-                            }
+                                for(int i = 0; i < 2 && aux != -1; i++) {
+                                    j.substituicao(0, subs[0], subs[1]);
+                                    subs = View.getSubstituicoes(j.getEquipaCasa());
+                                    if(subs[1] == -1) aux = -1;
+                                }
 
-                            j.runMetadePermiteSubs();
-                            View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                                j.runMetadePermiteSubs();
+                                View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
-                            System.out.println("\n" + j.getNomeCasa() + " " + j.getGolosCasa() + " - " + j.getGolosFora() + " " + j.getNomeFora() + "\n\n");
-                            View.pressAnyKey();
+                                System.out.println("\n" + j.getNomeCasa() + " " + j.getGolosCasa() + " - " + j.getGolosFora() + " " + j.getNomeFora() + "\n\n");
+                                View.pressAnyKey();
 
-                            if(j.getGolosCasa() == j.getGolosFora())  
-                                View.messages(4);
-                            else{
-                                int[] golosJogo = new int[2];
-                                golosJogo[0] = j.getGolosCasa();
-                                golosJogo[1] = j.getGolosFora();
-                                rondaG.add(golosJogo);
+                                if(j.getGolosCasa() == j.getGolosFora())  
+                                    View.messages(4);
+                                else{
+                                    int[] golosJogo = new int[2];
+                                    golosJogo[0] = j.getGolosCasa();
+                                    golosJogo[1] = j.getGolosFora();
+                                    rondaG.add(golosJogo);
 
-                                eP = 1;
-                                if (golosJogo[0] > golosJogo[1]) jogoProxRonda[0] = e1.getNome();
-                                else jogoProxRonda[0] = e2.getNome();
+                                    eP = 1;
+                                    if (golosJogo[0] > golosJogo[1]) jogoProxRonda[0] = e1.getNome();
+                                    else jogoProxRonda[0] = e2.getNome();
+                                }
                             }
                         }
-                    }
-                    
-                    t.simulaRonda(participa, jogoProxRonda, eP, rondaG);
-                    try{
-                        String rRonda = t.resultadosRondaToString(t.getRonda());
-                        View.showRonda(rRonda);
-                        View.pressAnyKey();
-                    } catch (RondaNaoValidaException r) {View.handler(3,"");}
+                        
+                        t.simulaRonda(participa, jogoProxRonda, eP, rondaG);
+                        try{
+                            String rRonda = t.resultadosRondaToString(t.getRonda());
+                            View.showRonda(rRonda);
+                            View.pressAnyKey();
+                        } catch (RondaNaoValidaException r) {View.handler(3,"");}
 
-                    if(t.getChave().get(t.getRonda() - 1).size() == 1){
-                        sair = false;
-                        System.out.println("O campeão foi " + jogoProxRonda[0] + "\n");
+                        if(t.getChave().get(t.getRonda() - 1).size() == 1){
+                            sair = false;
+                            System.out.println("O campeão foi " + jogoProxRonda[0] + "\n");
+                        }
                     }
-
                     break;
 
                 case(2): // Ver jogos proxima ronda
