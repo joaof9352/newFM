@@ -16,6 +16,7 @@ public class ControllerEquipa {
 
         boolean sair = true;
         while(sair) {
+            View.clear();
             menuEquipa.executa();
             switch(menuEquipa.getOpcao()) {
                 case 1: // Consultar lista de equipas
@@ -30,8 +31,8 @@ public class ControllerEquipa {
                     } else {   
                         String jogadores= equipas.get(key).toString();
                         View.showEquipa(jogadores);
-                        View.pressAnyKey();
                     }
+                    View.pressAnyKey();
                     break;
 
                 case 0: // Voltar

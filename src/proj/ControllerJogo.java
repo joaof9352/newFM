@@ -18,6 +18,7 @@ public class ControllerJogo {
 
         boolean sair = true;
         while(sair) {
+            View.clear();
             menuJogo.executa();
             switch(menuJogo.getOpcao()) {
                 case 1: // Jogar 1 vs 1
@@ -60,7 +61,7 @@ public class ControllerJogo {
                         }
 
                         j.runMetadePermiteSubs();
-                        View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(), j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                        View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosFora(), j.getMinutosOportunidadesCasa(), j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
                         subs = View.getSubstituicoes(j.getEquipaCasa());
                         if (subs[1] == -1) aux = -1;
@@ -80,7 +81,7 @@ public class ControllerJogo {
                         }
 
                         j.runMetadePermiteSubs();
-                        View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(), j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                        View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosFora(), j.getMinutosOportunidadesCasa(), j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
                     }
 
                     View.pressAnyKey();
@@ -121,7 +122,7 @@ public class ControllerJogo {
                         }
 
                         j2.runMetadePermiteSubs();
-                        View.showMetadeJogo(1, j2.getMinutosGolosCasa(), j2.getMinutosGolosCasa(), j2.getMinutosOportunidadesCasa(), j2.getMinutosOportunidadesFora(), j2.getNomeCasa(), j2.getNomeFora());
+                        View.showMetadeJogo(1, j2.getMinutosGolosCasa(), j2.getMinutosGolosFora(), j2.getMinutosOportunidadesCasa(), j2.getMinutosOportunidadesFora(), j2.getNomeCasa(), j2.getNomeFora());
 
                         subs2 = View.getSubstituicoes(j2.getEquipaCasa());
                         if (subs2[1] == -1) aux2 = -1;
@@ -132,7 +133,7 @@ public class ControllerJogo {
                         }
 
                         j2.runMetadePermiteSubs();
-                        View.showMetadeJogo(2, j2.getMinutosGolosCasa(), j2.getMinutosGolosCasa(), j2.getMinutosOportunidadesCasa(), j2.getMinutosOportunidadesFora(), j2.getNomeCasa(), j2.getNomeFora());
+                        View.showMetadeJogo(2, j2.getMinutosGolosCasa(), j2.getMinutosGolosFora(), j2.getMinutosOportunidadesCasa(), j2.getMinutosOportunidadesFora(), j2.getNomeCasa(), j2.getNomeFora());
                     }
                     View.pressAnyKey();
                     break;

@@ -19,20 +19,24 @@ public class Controller {
         boolean sair = true;
 
         while(sair){
+            View.clear();
             mainMenu.executa();
 
             switch(mainMenu.getOpcao()) {
                 case(1): // Simular um jogo
+                    View.clear();
                     ControllerJogo.start(e.getEquipas());
                     break;
 
                 case(2): // Torneio
+                    View.clear();
                     ControllerTorneio.start(e.getEquipas());
                     break;
 
                 case(3): // Consultar equipa
+                    View.clear();
                     try{ControllerEquipa.start(e.getEquipas());}
-                    catch(EquipaNaoExisteException s) {View.handler(2,"");}
+                    catch(EquipaNaoExisteException s) {View.handler(2,""); View.pressAnyKey();}
                     break;
                 
                 case(4): // Consultar jogador por nome
@@ -40,12 +44,14 @@ public class Controller {
                     break;
             
                 case(5): // Consultar jogos
+                    View.clear();
                     List<Jogo> jogos = new ArrayList<>(e.getJogos());
                     View.showJogos(jogos);
                     View.pressAnyKey();
                     break;
 
                 case(6): // Carregar ficheiro
+                    View.clear();
                     //String file = View.getNomeFicheiro();
                     try{
                         Parser.parse("/Users/joaolourenco/Universidade/2º Ano/2º Semestre/POO/newFM/src/proj/logs.txt", e);

@@ -171,9 +171,9 @@ public class Jogo {
 
     public void runMetadePermiteSubs() throws PosicaoSemJogadoresException, NumeroSemJogadorException {
         calculaPoder();
+        int i = this.getEstadoJogo() == Estado.A_INICIAR ? 0 : 45;
         if(this.getEstadoJogo() == Estado.A_INICIAR) this.setEstadoJogo(Estado.INTERVALO);
         else if(this.getEstadoJogo() == Estado.INTERVALO) this.setEstadoJogo(Estado.TERMINADO);
-        int i = this.getEstadoJogo() == Estado.A_INICIAR ? 0 : 45;
         int max = 45+i;
         for(; i < max; i++){
             Minuto m = new Minuto(poderCasa,poderFora);
@@ -195,8 +195,8 @@ public class Jogo {
 
     public void substituicao(int equipa, int nmrSair, int nmrEntrar) throws JogadorNaoExisteException, SubstituicaoImpossivelException {
 
-        if(this.getEstadoJogo() != Estado.INTERVALO)
-            throw new SubstituicaoImpossivelException("Só podes fazer subs no intervalo");
+        if(this.getEstadoJogo() == Estado.TERMINADO)
+            throw new SubstituicaoImpossivelException("O jogo já acabou!!");
 
         if((equipa == 0 && !this.jogCasa.contains(nmrSair)) || (equipa == 1 && !this.jogFora.contains(nmrSair)))
             throw new JogadorNaoExisteException("O jogador nmr " + nmrSair + " não existe!");

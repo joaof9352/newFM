@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class ControllerJogador {
 
     public static void start(Map<String, Equipa> equipas) {
-
+        View.clear();
         Map<String, Jogador> result = new HashMap<>();
         String nome = View.getNomeJogador();
 

@@ -26,6 +26,7 @@ public class View {
     }
 
     public static void showListaEquipas(List<String> equipas) {
+        View.clear();
         StringBuilder sb = new StringBuilder("---------- Lista de Equipas ----------\n");
         for (String e: equipas){
             sb.append(e + "\n");
@@ -64,6 +65,7 @@ public class View {
     }
 
     public static void showEquipa(String jogadores) {
+        clear();
         System.out.println(jogadores);
     }
 
@@ -87,6 +89,7 @@ public class View {
 
     public static void showJogadores(String nome, Map<String,Jogador> jogadores) {
 
+        clear();
         StringBuilder sb = new StringBuilder("------- Jogadores com o nome " + nome + "-------\n");
 
         for(Map.Entry<String,Jogador> entry : jogadores.entrySet()) {
@@ -106,8 +109,8 @@ public class View {
         StringBuilder sb = new StringBuilder();
         switch(message) {
             case(1): sb.append("Ficheiro lido com sucesso."); break;
-            case(2): sb.append("Se não pretende fazer mais alterações, insira -1. Jogador a sair: "); break;
-            case(3): sb.append("Se pretende cancelar a substituição, insira -1. Jogador a entrar: "); break;
+            case(2): sb.append("Se não pretende fazer mais alterações, insira -1.\nJogador a sair: "); break;
+            case(3): sb.append("Se pretende cancelar a substituição, insira -1.\nJogador a entrar: "); break;
             case(4): sb.append("Jogo empatado, haverá outro jogo para desempatar."); break;
         }
         System.out.println(sb.toString());
@@ -129,6 +132,7 @@ public class View {
     }
 
     public static int escolheEquipa(List<String> equipas, int nrJog) {
+        View.clear();
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(System.in);
         for(String s : equipas) {
@@ -164,6 +168,7 @@ public class View {
         int entrar;
         boolean repetir = true;
         while (repetir) {
+            clear();
             System.out.println(sEquipa.toString());
             messages(2);
             sair = scanner.nextInt();
@@ -192,6 +197,8 @@ public class View {
                 }
                 if(!equipa.getJogadorByNum(entrar).getClass().toString().equals(equipa.getJogadorByNum(sair).getClass().toString())) {
                     handler(7, "");
+                    result[0] = -1;
+                    result[1] = -1;
                     pressAnyKey();
                     repetir = true;
                 }
@@ -205,12 +212,6 @@ public class View {
                                                  List<Integer> minutosOportunidadesCasa,
                                                  List<Integer> minutosOportunidadesFora,
                                                  String casa, String fora) throws InterruptedException {
-
-        minutosGolosCasa.stream().forEach(System.out::println);
-        pressAnyKey();
-        minutosGolosFora.stream().forEach(System.out::println);
-        pressAnyKey();
-
         int init = 0;
         int fim = 45;
         int golosCasa = 0;
@@ -221,10 +222,11 @@ public class View {
             golosCasa = (int) minutosGolosCasa.stream().filter(k -> k < 46).count();
             golosFora = (int) minutosGolosFora.stream().filter(k -> k < 46).count();
         }
+        clear();
 
         for(int i = init; i < fim; i++) {
-            clear();
-            System.out.println("[" + casa + "] " + golosCasa + " vs " + golosFora + " [" + fora + "]\n");
+            Thread.sleep(300);
+            System.out.print("[" + casa + "] " + golosCasa + " vs " + golosFora + " [" + fora + "]           ");
             System.out.print("Minuto [" + i +  "] ");
 
             if (minutosOportunidadesCasa.contains(i)) {
@@ -250,10 +252,10 @@ public class View {
                     Thread.sleep(750);
                 }
             }
-            Thread.sleep(300);
+            System.out.println("");
         }
         if(parte == 2) {
-            System.out.println(casa + " " + golosCasa + " - " + golosFora + " " + fora + "\n\n");
+            System.out.println("\n\n==========  " + casa + " " + golosCasa + " - " + golosFora + " " + fora + "  ==========\n\n");
         }
     }
 }
