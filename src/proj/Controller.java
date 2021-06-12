@@ -1,4 +1,5 @@
 package proj;
+import java.io.IOException;
 import java.util.List;
 import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.LinhaIncorretaException;
@@ -14,7 +15,7 @@ public class Controller {
 
     public static void start() throws Exception {
 
-        String opcoes[] = {"Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Criador", "Carregar ficheiro", "Salvar"};
+        String opcoes[] = {"Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Criador", "Carregar ficheiro", "Carregar Ficheiro Binário", "Salvar em Binário"};
         Menu mainMenu = new Menu(opcoes);
         boolean sair = true;
 
@@ -56,10 +57,11 @@ public class Controller {
                 
                 case(7): // Carregar ficheiro
                     View.clear();
-                    //String file = View.getNomeFicheiro();
+                    String filePath = View.getNomeFicheiro();
                     try{
+                        Parser.parse(filePath, e);
                         //Parser.parse("/Users/joaolourenco/Universidade/2º Ano/2º Semestre/POO/newFM/src/proj/logs.txt", e);
-                        Parser.parse("/home/cristiano/Desktop/Universidade/2º Ano/Programação Orientada a Objetos/newFM/src/proj/logs.txt", e);
+                        //Parser.parse("/home/cristiano/Desktop/Universidade/2º Ano/Programação Orientada a Objetos/newFM/src/proj/logs.txt", e);
                         //Parser.parse("C:\\Users\\joaof\\Desktop\\newFM\\out\\production\\newFM\\proj\\logs.txt", e);
                         View.messages(1);
                     } catch(LinhaIncorretaException s) {
@@ -68,7 +70,21 @@ public class Controller {
                     View.pressAnyKey();
                     break;
 
-                case(8): // Salvar
+                case(8):// Carregar em Binário
+                    View.clear();
+                    String newPath = View.getNomeFicheiro();
+                    try { e = Estado.rdBinary(newPath); View.messages(5);}
+                    catch (IOException s) {View.handler(10,"");}
+                    View.pressAnyKey();
+                    break;
+
+                case(9): // Salvar Em Binário
+                    View.clear();
+                    String path = View.getNomeFicheiro();
+                    try {e.wrBinary(path); View.messages(5);}
+                    catch (IOException s) {View.handler(9,"");}
+                    View.pressAnyKey();
+                    break;
 
                 case(0): //Sair
                 sair = false;
