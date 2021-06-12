@@ -1,7 +1,5 @@
 package proj.Model;
 
-import java.util.Random;
-
 public class GuardaRedes extends Jogador{
 
     private int elasticidade;
@@ -27,7 +25,6 @@ public class GuardaRedes extends Jogador{
 
     public static GuardaRedes parse(String input){
         String[] campos = input.split(",");
-        Random r = new Random();
         return new GuardaRedes(campos[0], Integer.parseInt(campos[1]),
                 Integer.parseInt(campos[2]),
                 Integer.parseInt(campos[3]),

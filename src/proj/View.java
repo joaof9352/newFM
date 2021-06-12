@@ -43,6 +43,20 @@ public class View {
         return s;
     }
 
+    public static int getIntM(String s, int menos, int mais){
+        int n;
+        System.out.println(s);
+        Scanner scanner = new Scanner(System.in);
+        do{
+            n = scanner.nextInt();
+            if(n < menos || n > mais)
+                System.out.println("Número inválido");
+
+        } while(n < menos || n > mais);
+        //scanner.close();
+        return n;
+    }
+
     public static int getNRondasTorneio() {
         System.out.println("Insira o número de rondas do torneio: ");
         Scanner scanner = new Scanner(System.in);
@@ -52,7 +66,7 @@ public class View {
     }
 
     public static int getNRonda(){
-        StringBuilder sb = new StringBuilder("Insira a ronda que quer observar: \n");
+        StringBuilder sb = new StringBuilder("Insira a ronda que quer observar:");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         int s = scanner.nextInt();
@@ -70,7 +84,7 @@ public class View {
     }
 
     public static String getNomeJogador() {
-        StringBuilder sb = new StringBuilder("Insira o nome da jogador: \n");
+        StringBuilder sb = new StringBuilder("Insira o nome da jogador:");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
@@ -79,7 +93,7 @@ public class View {
     }
 
     public static String getNomeFicheiro() {
-        StringBuilder sb = new StringBuilder("Insira o nome do ficheiro a carregar: \n");
+        StringBuilder sb = new StringBuilder("Insira o nome do ficheiro a carregar:");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();

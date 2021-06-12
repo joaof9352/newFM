@@ -67,6 +67,9 @@ public class Estado implements Serializable{
     public void adicionaEquipa(Equipa e){
         this.equipas.put(e.getNome(), e);
     }
+    public void adicionaJogadorAEquipa(Jogador j, String nomeE){
+        this.equipas.get(nomeE).insereJogador(j);
+    }
 
 }
 

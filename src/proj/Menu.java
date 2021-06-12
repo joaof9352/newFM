@@ -51,7 +51,7 @@ public class Menu {
             op = -1;
         }
         if (op<0 || op>this.opcoes.size()) {
-            System.out.println("Opção Inválida!!!");
+            System.out.println("Opção Inválida!");
             op = -1;
         }
         //is.close();
