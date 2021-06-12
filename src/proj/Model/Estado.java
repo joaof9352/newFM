@@ -3,12 +3,13 @@ import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.NumeroSemJogadorException;
 
 import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-public class Estado {
+public class Estado implements Serializable{
     private Map<String, Equipa> equipas;
     private List<Jogo> jogos;
 

@@ -1,5 +1,6 @@
 package proj.Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,19 +9,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import proj.Exception.EquipaSemJogadoresException;
 import proj.Exception.EquipasInsuficientesException;
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
 import proj.Exception.RondaNaoValidaException;
 
-public class Torneio {
+public class Torneio implements Serializable{
     private int ronda;
     private String equipaJog;
     private Map<String, Equipa> equipas;
     private List<List<String[]>> chave;
     private List<List<int[]>> resultados;
-    //estatisticas?
-
 
     //contrutores
 
@@ -35,12 +35,13 @@ public class Torneio {
         this.resultados = new ArrayList<>();
 
         List<String[]> ronda = new ArrayList<>();
-        String[] jogo = new String[2];
+        String[] jogo;
 
         //escolha aleatória de equipas e criação da chave do torneio
         Random random = new Random();
         List<String> keys = new ArrayList<String>(equipas.keySet());
         for(int i = 0; i < Math.pow(2, nRondas - 1); i++){
+            jogo = new String[2];
             for(int j = 0; j < 2; j++){
                 String randomKey = keys.get(random.nextInt(keys.size()));
                 keys.remove(randomKey);
@@ -70,6 +71,7 @@ public class Torneio {
         //escolha aleatória de equipas e criação da chave do torneio
         Random random = new Random();
         List<String> keys = new ArrayList<String>(equipas.keySet());
+        keys.remove(equipaJ.getNome());
 
         String randomKey = keys.get(random.nextInt(keys.size()));
         keys.remove(randomKey);
@@ -79,8 +81,10 @@ public class Torneio {
         ronda.add(jogo);
 
         for(int i = 0; i < Math.pow(2, nRondas - 1) - 1; i++){
+            jogo = new String[2];
             for(int j = 0; j < 2; j++){
                 randomKey = keys.get(random.nextInt(keys.size()));
+                keys.remove(randomKey);
                 equipa = equipas.get(randomKey);
                 this.equipas.put(equipa.getNome(), equipa);
                 jogo[j] = randomKey;
@@ -123,6 +127,23 @@ public class Torneio {
             this.equipas.put(e.getNome(), e.clone());
     }
 
+    public List<List<String[]>> getChave() {
+        List<List<String[]>> ch = new ArrayList<>();
+        List<String[]> r;
+        String[] ss;
+
+        for(List<String[]> l : this.chave){
+            r = new ArrayList<>();
+            for(String[] s : l){
+                ss = new String[2];
+                System.arraycopy(s, 0, ss, 0, 2);
+                r.add(ss);
+            }
+            ch.add(r);
+        }
+        return ch;
+    }
+
 
 
     public boolean jogadorAindaParticipa(){
@@ -138,20 +159,24 @@ public class Torneio {
     }
 
     //simular ronda
-    public void simulaRonda(boolean participa) throws PosicaoSemJogadoresException, NumeroSemJogadorException{
+    public void simulaRonda(boolean participa, String[] jogoProxRonda, int eP, List<int[]> rondaG) throws PosicaoSemJogadoresException, NumeroSemJogadorException, EquipaSemJogadoresException{
         List<String[]> rondaS = this.chave.get(this.ronda);
         List<String[]> rondaSProx = new ArrayList<>();
-        List<int[]> rondaG = new ArrayList<>();
         int[] golosJogo;
-        String[] jogoProxRonda = new String[2];
+        Equipa e1, e2;
         Jogo j;
-        int i = 0, eP = 0;
+        int i = 0;
         
-        //if (participa) i = 1;
+        if (participa) i = 1;
 
         for(; i < rondaS.size(); i++){
             String[] equipasJogo = rondaS.get(i);
-            j = new Jogo(this.equipas.get(equipasJogo[0]), this.equipas.get(equipasJogo[1]), LocalDate.now());
+            e1 = this.equipas.get(equipasJogo[0]);
+            e2 = this.equipas.get(equipasJogo[1]);
+            e1.fillTitulares();
+            e2.fillTitulares();
+
+            j = new Jogo(e1, e2, LocalDate.now());
 
             while(j.getGolosCasa() == j.getGolosFora()){
                 j.runTotalParaSimulacao();
@@ -175,6 +200,8 @@ public class Torneio {
             }
             
         }
+        this.chave.add(rondaSProx);
+        this.resultados.add(rondaG);
         this.ronda++;
     }
     
@@ -187,13 +214,15 @@ public class Torneio {
         return sb.toString();
     }
 
+    //toString dos resultados de uma ronda do torneio
     public String resultadosRondaToString(int ronda) throws RondaNaoValidaException{
+        System.out.println("Ronda print " + ronda);
         if(ronda < 1 || ronda > this.getRonda()) throw new RondaNaoValidaException("A ronda que inseriu ainda não foi jogada, ou não é válida.");
         
         StringBuilder sb = new StringBuilder("Resultados da ronda ");
         sb.append(ronda).append(":\n");
 
-        for(int i = 0; i < this.chave.size(); i++)
+        for(int i = 0; i < this.chave.get(ronda - 1).size(); i++)
             sb.append(this.chave.get(ronda - 1).get(i)[0]).append("  ")
               .append(this.resultados.get(ronda - 1).get(i)[0]).append(" - ")
               .append(this.resultados.get(ronda - 1).get(i)[1]).append("  ")

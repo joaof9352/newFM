@@ -34,7 +34,7 @@ public class View {
     }
 
     public static String getNomeEquipa() {
-        StringBuilder sb = new StringBuilder("Insira o nome da equipa: \n");
+        StringBuilder sb = new StringBuilder("Insira o nome da equipa:");
         System.out.println(sb.toString());
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
@@ -108,6 +108,7 @@ public class View {
             case(1): sb.append("Ficheiro lido com sucesso."); break;
             case(2): sb.append("Se não pretende fazer mais alterações, insira -1. Jogador a sair: "); break;
             case(3): sb.append("Se pretende cancelar a substituição, insira -1. Jogador a entrar: "); break;
+            case(4): sb.append("Jogo empatado, haverá outro jogo para desempatar."); break;
         }
         System.out.println(sb.toString());
     }

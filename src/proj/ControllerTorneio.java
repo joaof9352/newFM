@@ -1,5 +1,10 @@
 package proj;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +13,7 @@ import proj.Exception.EquipaNaoExisteException;
 import proj.Exception.EquipasInsuficientesException;
 import proj.Exception.RondaNaoValidaException;
 import proj.Model.Equipa;
+import proj.Model.Jogo;
 import proj.Model.Torneio;
 
 public class ControllerTorneio {
@@ -27,7 +33,12 @@ public class ControllerTorneio {
                     break;
 
                 case(2): // Carregar torneio
-                    //carrega torneio já existente
+                    String fileName= "Test.txt";
+                    FileInputStream fin = new FileInputStream(fileName);
+                    ObjectInputStream ois = new ObjectInputStream(fin);
+                    Torneio t= (Torneio) ois.readObject();
+                    menuTorneio(t);
+                    ois.close();
                     break;
 
                 case(0): //Sair
@@ -49,9 +60,9 @@ public class ControllerTorneio {
             switch(mainMenu.getOpcao()) {//ver que limite dar nas rondas
                 case(1): // Escolher equipa e começar torneio
                     List<String> l = new ArrayList<>(equipas.keySet());
-                    View.showListaEquipas(l);
+                    int key = View.escolheEquipa(l, 1);
 
-                    String nomeEquipa = View.getNomeEquipa();
+                    String nomeEquipa = l.get(key);
                     if(!equipas.containsKey(nomeEquipa)) {throw new EquipaNaoExisteException("A equipa que inseriu não existe.");
                     } else {   
                         int nRondas = View.getNRondasTorneio();
@@ -85,21 +96,76 @@ public class ControllerTorneio {
 
         while(sair){
             torneioMenu.executa();
-            System.out.println("AQUI");
             switch(torneioMenu.getOpcao()) {
                 case(1): // Jogar proxima ronda
                     boolean participa = t.jogadorAindaParticipa();
-                    /*if(participa){
+                    String[] jogoProxRonda = new String[2];
+                    int eP = 0;
+                    List<int[]> rondaG = new ArrayList<>();
+                    if(participa){
+                        Equipa e1 = t.getEquipas().get(t.getChave().get(t.getRonda()).get(0)[0]);
+                        Equipa e2 = t.getEquipas().get(t.getChave().get(t.getRonda()).get(0)[1]);
 
-                    }*/
+                        e1.fillTitulares();
+                        e2.fillTitulares();
+                        Jogo j = new Jogo(e1,e2, LocalDate.now());
+            
+                        while(j.getGolosCasa() == j.getGolosFora()){
+                            int aux = 0;
+                            int subs[] = {0,0};
+
+                            subs = View.getSubstituicoes(j.getEquipaCasa());
+                            if(subs[1] == -1) aux = -1;
+                            while(aux != -1) {
+                                j.substituicao(0, subs[0], subs[1]);
+                                subs = View.getSubstituicoes(j.getEquipaCasa());
+                                if(subs[1] == -1) aux = -1;
+                            }
+
+                            j.runMetadePermiteSubs();
+                            View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+
+                            subs = View.getSubstituicoes(j.getEquipaCasa());
+                            if(subs[1] == -1) aux = -1;
+                            for(int i = 0; i < 2 && aux != -1; i++) {
+                                j.substituicao(0, subs[0], subs[1]);
+                                subs = View.getSubstituicoes(j.getEquipaCasa());
+                                if(subs[1] == -1) aux = -1;
+                            }
+
+                            j.runMetadePermiteSubs();
+                            View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+
+                            System.out.println("\n" + j.getNomeCasa() + " " + j.getGolosCasa() + " - " + j.getGolosFora() + " " + j.getNomeFora() + "\n\n");
+                            View.pressAnyKey();
+
+                            if(j.getGolosCasa() == j.getGolosFora())  
+                                View.messages(4);
+                            else{
+                                int[] golosJogo = new int[2];
+                                golosJogo[0] = j.getGolosCasa();
+                                golosJogo[1] = j.getGolosFora();
+                                rondaG.add(golosJogo);
+
+                                eP = 1;
+                                if (golosJogo[0] > golosJogo[1]) jogoProxRonda[0] = e1.getNome();
+                                else jogoProxRonda[0] = e2.getNome();
+                            }
+                        }
+                    }
                     
-                    t.simulaRonda(participa);
-                    
+                    t.simulaRonda(participa, jogoProxRonda, eP, rondaG);
                     try{
-                        String rRonda = t.resultadosRondaToString(t.getRonda() - 1);
+                        String rRonda = t.resultadosRondaToString(t.getRonda());
                         View.showRonda(rRonda);
                         View.pressAnyKey();
                     } catch (RondaNaoValidaException r) {View.handler(3);}
+
+                    if(t.getChave().get(t.getRonda() - 1).size() == 1){
+                        sair = false;
+                        System.out.println("O campeão foi " + jogoProxRonda[0] + "\n");
+                    }
+
                     break;
 
                 case(2): // Ver jogos proxima ronda
@@ -123,7 +189,11 @@ public class ControllerTorneio {
                     break;
                 
                 case(5): // Salvar torneio
-                    //falta fazer
+                    String fileName= "Test.txt";
+                    FileOutputStream fos = new FileOutputStream(fileName);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(t);
+                    oos.close();
                     break;
                 case(0): //Sair
                     sair = false;

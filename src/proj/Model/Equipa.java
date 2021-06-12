@@ -3,12 +3,12 @@ package proj.Model;
 import proj.Exception.EquipaSemJogadoresException;
 import proj.Exception.NumeroSemJogadorException;
 import proj.Exception.PosicaoSemJogadoresException;
-import proj.View;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Equipa {
+public class Equipa implements Serializable{
 
     private String nome;
     private List<Jogador> jogadores;
