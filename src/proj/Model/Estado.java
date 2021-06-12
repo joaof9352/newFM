@@ -64,6 +64,10 @@ public class Estado implements Serializable{
         return e;
     }
 
+    public void adicionaEquipa(Equipa e){
+        this.equipas.put(e.getNome(), e);
+    }
+
 }
 
 

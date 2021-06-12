@@ -14,7 +14,7 @@ public class Controller {
 
     public static void start() throws Exception {
 
-        String opcoes[] = {"Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Carregar ficheiro", "Salvar"};
+        String opcoes[] = {"Simular Jogo", "Torneio", "Consultar Equipa", "Consultar Jogador por nome", "Consultar Jogos", "Criador", "Carregar ficheiro", "Salvar"};
         Menu mainMenu = new Menu(opcoes);
         boolean sair = true;
 
@@ -50,12 +50,16 @@ public class Controller {
                     View.pressAnyKey();
                     break;
 
-                case(6): // Carregar ficheiro
+                case(6): // Criador
+                    ControllerCriador.start(e);
+                    break;
+                
+                case(7): // Carregar ficheiro
                     View.clear();
                     //String file = View.getNomeFicheiro();
                     try{
-                        Parser.parse("/Users/joaolourenco/Universidade/2º Ano/2º Semestre/POO/newFM/src/proj/logs.txt", e);
-                        //Parser.parse("/home/cristiano/Desktop/Universidade/2º Ano/Programação Orientada a Objetos/newFM/src/proj/logs.txt", e);
+                        //Parser.parse("/Users/joaolourenco/Universidade/2º Ano/2º Semestre/POO/newFM/src/proj/logs.txt", e);
+                        Parser.parse("/home/cristiano/Desktop/Universidade/2º Ano/Programação Orientada a Objetos/newFM/src/proj/logs.txt", e);
                         //Parser.parse("C:\\Users\\joaof\\Desktop\\newFM\\out\\production\\newFM\\proj\\logs.txt", e);
                         View.messages(1);
                     } catch(LinhaIncorretaException s) {
@@ -64,7 +68,7 @@ public class Controller {
                     View.pressAnyKey();
                     break;
 
-                case(7): // Salvar
+                case(8): // Salvar
 
                 case(0): //Sair
                 sair = false;
