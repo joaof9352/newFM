@@ -216,7 +216,6 @@ public class Torneio implements Serializable{
 
     //toString dos resultados de uma ronda do torneio
     public String resultadosRondaToString(int ronda) throws RondaNaoValidaException{
-        System.out.println("Ronda print " + ronda);
         if(ronda < 1 || ronda > this.getRonda()) throw new RondaNaoValidaException("A ronda que inseriu ainda não foi jogada, ou não é válida.");
         
         StringBuilder sb = new StringBuilder("Resultados da ronda ");

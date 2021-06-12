@@ -129,7 +129,7 @@ public class ControllerTorneio {
                                 }
 
                                 j.runMetadePermiteSubs();
-                                View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                                View.showMetadeJogo(1, j.getMinutosGolosCasa(), j.getMinutosGolosFora(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
                                 subs = View.getSubstituicoes(j.getEquipaCasa());
                                 if(subs[1] == -1) aux = -1;
@@ -140,7 +140,7 @@ public class ControllerTorneio {
                                 }
 
                                 j.runMetadePermiteSubs();
-                                View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosCasa(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
+                                View.showMetadeJogo(2, j.getMinutosGolosCasa(), j.getMinutosGolosFora(), j.getMinutosOportunidadesCasa(),j.getMinutosOportunidadesFora(), j.getNomeCasa(), j.getNomeFora());
 
                                 System.out.println("\n" + j.getNomeCasa() + " " + j.getGolosCasa() + " - " + j.getGolosFora() + " " + j.getNomeFora() + "\n\n");
                                 View.pressAnyKey();
